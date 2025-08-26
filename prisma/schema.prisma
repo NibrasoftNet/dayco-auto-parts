@@ -1,0 +1,383 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model articles {
+  ste        Float?
+  iann       Float?
+  cod        String?   @db.NVarChar(22)
+  libf       String?   @db.NVarChar(255)
+  uni        String?   @db.NVarChar(5)
+  nuni       String?   @db.NVarChar(50)
+  stk        Float?
+  tva        Float?
+  pac        Float?
+  pacttc     Float?
+  mar        Float?
+  pvhtva     Float?
+  pvttc      Float?
+  prixgros   Float?    @db.Real
+  frn        String?   @db.NVarChar(12)
+  nfrn       String?   @db.NVarChar(50)
+  fdc        String?   @db.NVarChar(3)
+  tfdc       Float?
+  empl       String?   @db.NVarChar(30)
+  fam        String?   @db.NVarChar(5)
+  nfam       String?   @db.NVarChar(50)
+  ord        Float?
+  pmp        Float?
+  datstk     DateTime? @db.SmallDateTime
+  remfrn     Float?
+  remcli     Float?
+  tent       Float?
+  tsrt       Float?
+  dens       Float?
+  prxdep     Float?
+  dev        String?   @db.NVarChar(5)
+  stkmini    Float?
+  uns        String?   @db.NVarChar(5)
+  denss      Float?
+  codebar    String?   @db.NVarChar(22)
+  codefour   String?   @db.NVarChar(22)
+  prixpub    Float?
+  prixsgros  Float?
+  prixspec   Float?
+  stock      String?   @db.NVarChar(3)
+  reffrn     String?   @db.NVarChar(30)
+  remacc     String?   @db.NVarChar(3)
+  sfam       String?   @db.NVarChar(10)
+  nsfam      String?   @db.NVarChar(50)
+  marm       Float?
+  prxs       Float?
+  qtes       Float?
+  dernv      Float?
+  equiv      String?   @db.NVarChar(5)
+  invent     String?   @db.NVarChar(3)
+  ngp        String?   @db.NVarChar(30)
+  numaut     Float?
+  poids      Float?    @db.Real
+  invent1    String?   @db.NVarChar(3)
+  corrig     String?   @db.NVarChar(3)
+  codimg     String?   @db.NVarChar(22)
+  prixpubttc Float?
+  marp       Float?
+  exo        String?   @db.NVarChar(3)
+  ttcmaj     Float?
+  flge       String?   @db.NVarChar(3)
+  prxm       Float?
+  datc       DateTime? @db.SmallDateTime
+  datm       DateTime? @db.SmallDateTime
+  utlc       String?   @db.NVarChar(3)
+  nutlc      String?   @db.NVarChar(50)
+  utlm       String?   @db.NVarChar(3)
+  nutlm      String?   @db.NVarChar(50)
+  stkmag     Float?
+  gerer      String?   @db.NVarChar(3)
+  minc       Float?
+  empl1      String?   @db.NVarChar(30)
+  sfm        Int?
+  plfrem     Float?
+  blc        String?   @db.NVarChar(3)
+  fdcfrn     Float?
+  pachtva    Float?
+  prvttc     Float?
+  txtzon     String?   @db.NVarChar(30)
+  cat        String?   @db.NVarChar(10)
+  ncat       String?   @db.NVarChar(100)
+  libcat     String?   @db.NVarChar(100)
+  stk1       Float?
+  tentd      Float?
+  tsrtd      Float?
+  prxn       String?   @db.NVarChar(3)
+  prxach     Float?
+  impc       String?   @db.NVarChar(3)
+  txtzon1    String?   @db.NVarChar(30)
+  txtzon2    String?   @db.NVarChar(30)
+  empl2      String?   @db.NVarChar(30)
+  b2b        String?   @db.NVarChar(3)
+  obs        String?   @db.NVarChar(Max)
+  Oobsec     String?   @db.NVarChar(Max)
+  coder      String?   @db.NVarChar(50)
+  pvhtvar    Float?
+  mara       Float?
+  nbrc       Float?
+  marg       Float?
+  coderr     String?   @db.NVarChar(50)
+  maj        String?   @db.NChar(10)
+  stkmax     Float?
+  actif      Int?
+  typ        String?   @db.NChar(1)
+  descrip    String?   @db.NVarChar(Max)
+  ctrlach    String?   @db.NChar(3)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model client {
+  ste       Float?
+  iann      Float?
+  codecli   String?   @db.NVarChar(12)
+  libcli    String?   @db.NVarChar(255)
+  adrcli    String?   @db.NVarChar(255)
+  telcli    String?   @db.NVarChar(255)
+  faxcli    String?   @db.NVarChar(255)
+  tvacli    String?   @db.NVarChar(30)
+  patcli    String?   @db.NVarChar(3)
+  prscli    String?   @db.NVarChar(100)
+  maicli    String?   @db.NVarChar(100)
+  adrclia   String?   @db.NVarChar(255)
+  adrclig   String?   @db.NVarChar(255)
+  timcli    String?   @db.NVarChar(3)
+  exocli    String?   @db.NVarChar(10)
+  plfcli    Float?
+  debcli    Float?
+  crecli    Float?
+  typcli    String?   @db.NVarChar(2)
+  remcli    Float?
+  devcli    String?   @db.NVarChar(3)
+  ndevcli   String?   @db.NVarChar(50)
+  ribcli    String?   @db.NVarChar(100)
+  autf      String?   @db.NVarChar(3)
+  accrem    String?   @db.NVarChar(3)
+  cptcli    String?   @db.NVarChar(12)
+  cmr       String?   @db.NVarChar(12)
+  ncmr      String?   @db.NVarChar(30)
+  rcv       String?   @db.NVarChar(12)
+  nrcv      String?   @db.NVarChar(30)
+  aut       String?   @db.NVarChar(3)
+  reg       String?   @db.NVarChar(7)
+  nreg      String?   @db.NVarChar(50)
+  typecli   String?   @db.NVarChar(5)
+  ntypecli  String?   @db.NVarChar(50)
+  encrcli   Float?
+  impcli    Float?
+  trvcli    String?   @db.NVarChar(3)
+  inscli    String?   @db.NVarChar(3)
+  vilcli    String?   @db.NVarChar(5)
+  regcli    String?   @db.NVarChar(5)
+  nvilcli   String?   @db.NVarChar(50)
+  nregcli   String?   @db.NVarChar(50)
+  marach    Float?
+  bnkcli    String?   @db.NVarChar(10)
+  nbnkcli   String?   @db.NVarChar(255)
+  nbrfact   Float?
+  codreg    String?   @db.NVarChar(12)
+  magcli    String?   @db.NVarChar(10)
+  nmagcli   String?   @db.NVarChar(255)
+  codefourn String?   @db.NVarChar(12)
+  adrbnk    String?   @db.NVarChar(255)
+  clipass   String?   @db.NVarChar(3)
+  datc      DateTime? @db.SmallDateTime
+  datm      DateTime? @db.SmallDateTime
+  utlc      String?   @db.NVarChar(3)
+  nutlc     String?   @db.NVarChar(50)
+  utlm      String?   @db.NVarChar(3)
+  nutlm     String?   @db.NVarChar(50)
+  actv      String?   @db.NVarChar(255)
+  enccli    Float?
+  badge     String?   @db.NVarChar(50)
+  numexo    String?   @db.NVarChar(50)
+  datexo    DateTime? @db.SmallDateTime
+  adm       String?   @db.NVarChar(10)
+  pswd      String?   @db.NVarChar(10)
+  remcaf    String?   @db.NVarChar(3)
+  remb2b    Float?
+  numcnss   Float?
+  clecnss   Float?
+  nbrj      Float?
+  delp      Float?
+  paccli    String?   @db.NChar(3)
+  tauret    Float?
+  modlp     String?   @db.NVarChar(255)
+  modp      String?   @db.NVarChar(255)
+  rib1      String?   @db.NVarChar(255)
+  bnk1      String?   @db.NVarChar(255)
+  nbnk1     String?   @db.NVarChar(255)
+  adr1      String?   @db.NVarChar(255)
+  rc        String?   @db.NVarChar(50)
+  impcc     String?   @db.NChar(3)
+  modep     String?   @db.NVarChar(50)
+  ctrlach   String?   @db.NChar(3)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cmdesb2b {
+  numf      Float?
+  datf      DateTime? @db.SmallDateTime
+  clif      String?   @db.NVarChar(25)
+  nclif     String?   @db.NVarChar(255)
+  adrclif   String?   @db.NVarChar(255)
+  codtvaf   String?   @db.NVarChar(30)
+  remexp    Float?
+  cmdf      String?   @db.NVarChar(30)
+  datcmdf   DateTime? @db.SmallDateTime
+  htvaf     Float?
+  tvaf      Float?
+  ttcf      Float?
+  timf      Float?
+  frmf      String?   @db.NVarChar(3)
+  magf      String?   @db.NVarChar(5)
+  nmagf     String?   @db.NVarChar(50)
+  facturef  String?   @db.NVarChar(3)
+  remc      Float?
+  utlf      String?   @db.NVarChar(5)
+  devclif   String?   @db.NVarChar(3)
+  ndevclif  String?   @db.NVarChar(50)
+  coursf    Float?
+  verf      String?   @db.NVarChar(3)
+  bashtva   Float?
+  fdc       Float?
+  remise    Float?
+  tothtva   Float?
+  uni       String?   @db.NVarChar(3)
+  cptf      String?   @db.NVarChar(3)
+  remexpm   Float?
+  remexpmnt Float?
+  reglf     Float?
+  rstf      Float?
+  Devf      String?   @db.NVarChar(10)
+  txt1      String?   @db.NVarChar(50)
+  prx1      Float?
+  txt2      String?   @db.NVarChar(50)
+  prx2      Float?
+  txt3      String?   @db.NVarChar(50)
+  prx3      Float?
+  txt4      String?   @db.NVarChar(50)
+  prx4      Float?
+  txt5      String?   @db.NVarChar(50)
+  prx5      Float?
+  typ       String?   @db.NVarChar(2)
+  flgf      String?   @db.NVarChar(2)
+  obs       String?   @db.NVarChar(255)
+  vend      String?   @db.NVarChar(3)
+  nvend     String?   @db.NVarChar(50)
+  numfact   Float?
+  imp       String?   @db.NVarChar(50)
+  dats      DateTime? @db.SmallDateTime
+  utls      String?   @db.NVarChar(5)
+  major     Float?
+  mntr      Float?
+  flag      String?   @db.NVarChar(10)
+  dattrf    DateTime? @db.SmallDateTime
+  datc      DateTime? @db.SmallDateTime
+  datm      DateTime? @db.SmallDateTime
+  utlc      String?   @db.NVarChar(3)
+  nutlc     String?   @db.NVarChar(50)
+  utlm      String?   @db.NVarChar(3)
+  nutlm     String?   @db.NVarChar(50)
+  numexo    String?   @db.NVarChar(100)
+  flgtrf    String?   @db.NVarChar(3)
+  transfere String?   @db.NVarChar(3)
+  achi      Float?
+  ser       String?   @db.NVarChar(2)
+  clid      String?   @db.NVarChar(40)
+  fam       String?   @db.NVarChar(10)
+  ttcfact   Float?
+  remexp2   Float?
+  ste       Float?
+  iann      Float?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cmdesb2bdetail {
+  numdf    Float?
+  artdf    String?   @db.NVarChar(22)
+  inddf    Int?
+  datdf    DateTime? @db.SmallDateTime
+  libdf    String?   @db.NVarChar(255)
+  unidf    String?   @db.NVarChar(5)
+  fdcdf    Int?
+  tvadf    Float?
+  qtedf    Float?
+  prxhtvdf Float?
+  prxttcdf Float?
+  remdf    Float?
+  pacdf    Float?
+  fermeedf String?   @db.NVarChar(3)
+  clidf    String?   @db.NVarChar(12)
+  magdf    String?   @db.NVarChar(5)
+  flgdf    String?   @db.NVarChar(2)
+  numrdf   String?   @db.NVarChar(21)
+  frndf    String?   @db.NVarChar(12)
+  tothtva  Float?
+  prxttc   Float?
+  unid     String?   @db.NVarChar(5)
+  obsdf    String?   @db.NVarChar(3)
+  dnomf    String?   @db.NVarChar(3)
+  lgf      Float?
+  laf      Float?
+  htf      Float?
+  prixpub  Float?
+  txt1     String?   @db.NVarChar(50)
+  prx1     Float?
+  txt2     String?   @db.NVarChar(50)
+  prx2     Float?
+  txt3     String?   @db.NVarChar(50)
+  prx3     Float?
+  txt4     String?   @db.NVarChar(50)
+  prx4     Float?
+  txt5     String?   @db.NVarChar(50)
+  prx5     Float?
+  ncod     String?   @db.NVarChar(22)
+  achi     Float?
+  qtedl    Float?
+  univdf   String?   @db.NVarChar(5)
+  qteliv   Float?
+  vend     String?   @db.NVarChar(3)
+  fam      String?   @db.NVarChar(10)
+  nvend    String?   @db.NVarChar(50)
+  dens     Float?
+  factc    String?   @db.NVarChar(3)
+  ordre    Float?
+  fdcdfrn  Float?
+  ser      String?   @db.NVarChar(2)
+  totfdc   Float?
+  ste      Float?
+  iann     Float?
+  remc     Float?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Famille {
+  CODECATEG   String? @db.NVarChar(5)
+  CodeFamille String? @db.NVarChar(5)
+  NomFamille  String? @db.NVarChar(50)
+  cptfamille  String? @db.NVarChar(12)
+  blcfam      String? @db.NVarChar(3)
+  cptfamillec String? @db.NVarChar(12)
+  cptfamillem String? @db.NVarChar(12)
+  ordre       Float?
+  b2b         String? @db.NVarChar(3)
+  pic         Bytes?  @db.Image
+  ste         Float?
+  iann        Float?
+  typ         String? @db.NChar(1)
+  remf        String? @db.NChar(3)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model origines {
+  cod   String? @db.NVarChar(22)
+  codeq String? @db.NVarChar(22)
+  frn   String? @db.NVarChar(255)
+  ste   Float?
+  iann  Float?
+
+  @@ignore
+}
