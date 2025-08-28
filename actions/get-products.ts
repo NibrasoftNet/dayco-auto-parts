@@ -1,7 +1,7 @@
 
  
 import { db, withSyntheticId } from "@/lib/db";
-import { Articles } from "@/types";
+import { Articles } from "@/types/articles.type";
 
 // Server-side only
 export async function getProducts(
@@ -17,7 +17,7 @@ export async function getProducts(
     WHERE cod LIKE ${"%" + query + "%"}
        OR reffrn LIKE ${"%" + query + "%"}
        OR codebar LIKE ${"%" + query + "%"}
-    ORDER BY cod ASC
+    ORDER BY iann ASC
     OFFSET ${offset} ROWS
     FETCH NEXT ${pageSize} ROWS ONLY
   `;
