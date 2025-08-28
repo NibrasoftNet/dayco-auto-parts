@@ -34,7 +34,10 @@ export type ArticleDetailType = {
   articleMediaType: number;
   articleMediaFileName: string;
   articleInfo: ArticleInfoType;
-  allSpecifications: null | Record<string, unknown>;
+  allSpecifications: null | {
+    criteriaName: string;
+    criteriaValue: never;
+  }[];
   eanNo: {
     eanNumbers: string[] | null;
   };

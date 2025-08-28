@@ -110,7 +110,7 @@ export const SUPPLIERS: Record<
     supId: "16",
     supBrand: "BILSTEIN",
     supMatchCode: "BILSTEIN",
-    websiteURL: "www.google.com",
+    websiteURL: "www.bilstein.com",
     supLogoURL: "/suppliers/BILSTEIN.png",
   },
   "18": {
@@ -336,8 +336,8 @@ export const SUPPLIERS: Record<
     supId: "57",
     supBrand: "QUINTON HAZELL",
     supMatchCode: "QUINTON HAZELL",
-    websiteURL: "www.google.com",
-    supLogoURL: "/suppliers/QUINTON HAZELL.png",
+    websiteURL: "https://www.qhwebcat.com",
+    supLogoURL: "/suppliers/QUINTON-HAZELL.png",
   },
 
   "59": {
@@ -1080,7 +1080,7 @@ export const SUPPLIERS: Record<
     supId: "205",
     supBrand: "NRF",
     supMatchCode: "NRF",
-    websiteURL: "www.google.com",
+    websiteURL: "www.nrf.eu",
     supLogoURL: "/suppliers/NRF.png",
   },
   "206": {
@@ -1640,7 +1640,7 @@ export const SUPPLIERS: Record<
     supId: "317",
     supBrand: "AKRON-MALÒ",
     supMatchCode: "AKRON-MALÒ",
-    websiteURL: "www.google.com",
+    websiteURL: "https://malospa.it/en/",
     supLogoURL: "/suppliers/AKRON-MALÒ.png",
   },
   "318": {

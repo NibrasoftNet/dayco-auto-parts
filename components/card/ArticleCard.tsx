@@ -13,10 +13,10 @@ const ArticleCard = ({article}: {article: ArticleDetailType }) => {
         >
             <article className="flex flex-col md:flex-row gap-2 items-start">
                 <Image
-                    src={article.s3ImageLink}
+                    src={article.imageLink || article.imageMedia || article.s3ImageLink}
                     width={50}
                     height={50}
-                    alt="Articele Image"
+                    alt="article-image"
                     className="hidden md:block col-span-1"
                     unoptimized
                 />

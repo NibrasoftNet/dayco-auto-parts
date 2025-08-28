@@ -36,7 +36,7 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                 <div className="flex w-full justify-between">
                   <div className="flex items-center gap-4">
                     <Image
-                      src={article.s3ImageLink || article.imageLink}
+                      src={article.imageLink || article.imageMedia || article.s3ImageLink}
                       alt={article.articleProductName}
                       width={100}
                       height={100}
@@ -54,7 +54,7 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                       getSupplierProperty(
                         String(article.supplierId),
                         "supLogoURL",
-                      ) || "/placeholder.png"
+                      ) ?? "/suppliers/SUPPLIER.svg"
                     }
                     alt={article.supplierName}
                     width={100}
@@ -66,11 +66,13 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
               <CardContent>
                 <Tabs defaultValue="info" className="w-full">
                   {/* Tabs Navigation */}
-                  <TabsList className="grid grid-cols-3 w-full">
+                  <TabsList className="grid grid-cols-4 w-full">
                     <TabsTrigger value="info">Info</TabsTrigger>
                     <TabsTrigger value="oem">OEM Numbers</TabsTrigger>
                     <TabsTrigger value="cars">Compatible Cars</TabsTrigger>
+                    <TabsTrigger value="specs">Specifications</TabsTrigger>
                   </TabsList>
+
                   {/* Info Section */}
                   <TabsContent value="info" className="mt-4">
                     <ul className="space-y-2 text-sm">
@@ -110,29 +112,26 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                   <TabsContent value="oem" className="mt-4">
                     {article.oemNo && article.oemNo.length > 0 ? (
                       <ul className="list-disc pl-4 space-y-1 text-sm">
-                        {article.oemNo.map(
-                          (oem: OemNumberType, index: number) => (
-                            <li
-                              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                              key={index}
-                              className="flex w-full items-center justify-between"
-                            >
-                              <p>
-                                <strong>Supplier:</strong>&nbsp;
-                                <span>{oem.oemBrand},&nbsp;</span>
-                              </p>
-                              <p>
-                                <strong>Reference:</strong>&nbsp;
-                                <Link
-                                  href={`oem/details/${oem.oemDisplayNo}`}
-                                  className="hover:underline hover:text-blue-500"
-                                >
-                                  {oem.oemDisplayNo}
-                                </Link>
-                              </p>
-                            </li>
-                          ),
-                        )}
+                        {article.oemNo.map((oem: OemNumberType, index: number) => (
+                          <li
+                            key={index}
+                            className="flex w-full items-center justify-between"
+                          >
+                            <p>
+                              <strong>Supplier:</strong>&nbsp;
+                              <span>{oem.oemBrand},&nbsp;</span>
+                            </p>
+                            <p>
+                              <strong>Reference:</strong>&nbsp;
+                              <Link
+                                href={`oem/details/${oem.oemDisplayNo}`}
+                                className="hover:underline hover:text-blue-500"
+                              >
+                                {oem.oemDisplayNo}
+                              </Link>
+                            </p>
+                          </li>
+                        ))}
                       </ul>
                     ) : (
                       <p className="text-sm text-muted-foreground">
@@ -140,9 +139,10 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                       </p>
                     )}
                   </TabsContent>
+
                   {/* Compatible Cars Section */}
                   <TabsContent value="cars" className="mt-4">
-                    {article.compatibleCars.length > 0 ? (
+                    {article.compatibleCars && article.compatibleCars.length > 0 ? (
                       <ul className="space-y-2 text-sm overflow-auto">
                         {article.compatibleCars.map((car) => (
                           <li
@@ -165,6 +165,24 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                     ) : (
                       <p className="text-sm text-muted-foreground">
                         No compatible cars found.
+                      </p>
+                    )}
+                  </TabsContent>
+
+                  {/* Specifications Section */}
+                  <TabsContent value="specs" className="mt-4">
+                    {article.allSpecifications && article.allSpecifications.length > 0 ? (
+                      <ul className="space-y-4 text-sm">
+                        {article.allSpecifications.map((spec, index) => (
+                          <li key={index} className="flex gap-1 items-center border p-2 rounded-md shadow-sm bg-muted/20">
+                            <span className="font-semibold">{spec.criteriaName}:</span>
+                            <span>{spec.criteriaValue}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">
+                        No specifications available.
                       </p>
                     )}
                   </TabsContent>
