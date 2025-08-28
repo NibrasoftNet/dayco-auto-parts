@@ -1,7 +1,7 @@
 
  
 import { db, withSyntheticId } from "@/lib/db";
-import { Articles } from "@/types";
+import { Articles } from "@/types/articles.type";
 
 // Server-side only
 export async function getProducts(

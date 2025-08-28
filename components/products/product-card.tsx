@@ -1,7 +1,9 @@
 "use client";
+
 import { memo } from "react";
-import { Articles } from "@/types";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Articles } from "@/types/articles.type";
 
 interface ProductCardProps {
   article: Articles & { id: string };
@@ -11,10 +13,10 @@ interface ProductCardProps {
 const ProductCard = memo(({ article, idx }: ProductCardProps) => (
   <Card
     key={`${article.id}-${idx}`}
-    className="hover:shadow-lg transition-shadow"
+    className="transition-shadow hover:shadow-lg"
   >
     <CardHeader>
-      <CardTitle className="truncate max-w-[200px]">
+      <CardTitle className="max-w-[200px] truncate">
         {article.libf || "No Name"}
       </CardTitle>
     </CardHeader>

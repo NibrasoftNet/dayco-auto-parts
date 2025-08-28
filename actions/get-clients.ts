@@ -1,6 +1,6 @@
  
 import { db, withSyntheticId } from "@/lib/db";
-import { Client } from "@/types";
+import { Client } from "@/types/articles.type";
 
 export async function getClients(page = 1, pageSize = 20): Promise<(Client & {
     id: string;

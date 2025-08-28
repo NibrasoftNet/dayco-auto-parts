@@ -1,7 +1,7 @@
  
 
 import { db, withSyntheticId } from "@/lib/db";
-import { Articles } from "@/types";
+import { Articles } from "@/types/articles.type";
 
 export async function getArticles(page = 1, pageSize = 20): Promise<(Articles & {
     id: string;

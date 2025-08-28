@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Articles } from "@/types";
-import { Input } from "@/components/ui/input";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { serialize } from "@/lib/serializers";
-import ProductCardSkeleton from "./product-card-skeleton";
+import { Articles } from "@/types/articles.type";
+
 import ProductCard from "./product-card";
+import ProductCardSkeleton from "./product-card-skeleton";
 
 interface ProductListProps {
   initialArticles: (Articles & { id: string })[];
@@ -87,7 +88,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
   return (
     <>
       {/* Search Form */}
-      <form onSubmit={handleSearch} className="flex gap-2 mb-6">
+      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
         <Input
           placeholder="Search by Part#"
           value={query}
@@ -100,7 +101,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
       </form>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {articles.map((article, idx) => (
           <ProductCard
             key={`${article.id}-${idx}`}
@@ -118,7 +119,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
 
       {/* Load More Button */}
       {hasMore && !loading && (
-        <div className="flex justify-center mt-6">
+        <div className="mt-6 flex justify-center">
           <Button onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? "Loading..." : "Load More"}
           </Button>
@@ -127,7 +128,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
 
       {/* Empty state */}
       {!loading && articles.length === 0 && (
-        <div className="text-center mt-8 text-gray-500">No products found.</div>
+        <div className="mt-8 text-center text-gray-500">No products found.</div>
       )}
     </>
   );
