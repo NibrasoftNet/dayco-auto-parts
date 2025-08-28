@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,81 +22,131 @@ export default function ProductList({ initialArticles }: ProductListProps) {
   const router = useRouter();
 
   const initialQuery = searchParams.get("q") || "";
-  const initialPage = parseInt(searchParams.get("page") || "1", 10);
-
   const [query, setQuery] = useState(initialQuery);
   const [articles, setArticles] = useState(initialArticles);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [page, setPage] = useState(initialPage);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(initialArticles.length === 20);
+
+  const abortRef = useRef<AbortController | null>(null);
   const pageSize = 20;
-  const [hasMore, setHasMore] = useState(initialArticles.length === pageSize);
 
-  async function fetchProducts(q: string, p: number) {
-    const res = await fetch(
-      `/api/products?q=${encodeURIComponent(q)}&page=${p}&pageSize=${pageSize}`
-    );
-    if (!res.ok) throw new Error("Failed to fetch products");
-    return res.json() as Promise<(Articles & { id: string })[]>;
-  }
+  // ----------------------
+  // Fetch products
+  // ----------------------
+  const fetchProducts = useCallback(
+    async (q: string, p: number, replace = false) => {
+      // Abort previous request if still pending
+      if (abortRef.current) abortRef.current.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
 
-  async function handleSearch(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setPage(1);
+      try {
+        const res = await fetch(
+          `/api/products?q=${encodeURIComponent(q)}&page=${p}&pageSize=${pageSize}`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) throw new Error("Failed to fetch products");
 
-    const newUrl = serialize({ q: query, page: 1 });
-    router.replace(`?${newUrl}`);
+        const data = (await res.json()) as (Articles & { id: string })[];
+        setArticles((prev) => (replace ? data : [...prev, ...data]));
+        setHasMore(data.length === pageSize);
+        return data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        if (err.name === "AbortError") return [];
+        throw err;
+      }
+    },
+    []
+  );
 
-    const results = await fetchProducts(query, 1);
-    setArticles(results);
-    setHasMore(results.length === pageSize);
-    setLoading(false);
-  }
+  // ----------------------
+  // Handle search
+  // ----------------------
+  const handleSearch = useCallback(
+    async (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
+      setLoading(true);
+      setPage(1);
 
-  async function loadMore() {
-    const nextPage = page + 1;
-    setLoadingMore(true);
+      const newUrl = query ? serialize({ q: query }) : "";
+      router.replace(newUrl ? `${newUrl}` : "/dashboard/products");
 
-    const results = await fetchProducts(query, nextPage);
-    setArticles((prev) => [...prev, ...results]);
-    setPage(nextPage);
-    setHasMore(results.length === pageSize);
-
-    const newUrl = serialize({ q: query, page: nextPage });
-    router.replace(`?${newUrl}`);
-
-    setLoadingMore(false);
-  }
-
-  // Optional: Update state if URL params change
-  useEffect(() => {
-    async function loadFromUrl() {
-      const q = searchParams.get("q") || "";
-      const p = parseInt(searchParams.get("page") || "1", 10);
-      if (q !== query || p !== page) {
-        setQuery(q);
-        setPage(p);
-        setLoading(true);
-        const results = await fetchProducts(q, p);
-        setArticles(results);
-        setHasMore(results.length === pageSize);
+      try {
+        await fetchProducts(query, 1, true);
+      } finally {
         setLoading(false);
       }
+    },
+    [query, fetchProducts, router]
+  );
+
+  // ----------------------
+  // Load more
+  // ----------------------
+  const loadMore = useCallback(async () => {
+    setLoadingMore(true);
+    const nextPage = page + 1;
+    try {
+      await fetchProducts(query, nextPage);
+      setPage(nextPage);
+    } finally {
+      setLoadingMore(false);
     }
-    loadFromUrl();
-  }, [searchParams.toString()]);
+  }, [page, query, fetchProducts]);
+
+  // ----------------------
+  // Initial load on mount (URL query)
+  // ----------------------
+  useEffect(() => {
+    const urlQuery = searchParams.get("q") || "";
+    setQuery(urlQuery);
+    setPage(1);
+    setLoading(true);
+
+    fetchProducts(urlQuery, 1, true).finally(() => setLoading(false));
+  }, []); // only on mount
+
+  // ----------------------
+  // Clear search
+  // ----------------------
+  const clearSearch = useCallback(() => {
+    setQuery(""); // clear input
+    setPage(1); // reset pagination
+    setLoading(true);
+
+    // Remove `q` from URL
+    router.replace("/dashboard/products"); // now URL has no query
+
+    fetchProducts("", 1, true) // fetch all products
+      .finally(() => setLoading(false));
+  }, [fetchProducts, router]);
 
   return (
     <>
       {/* Search Form */}
-      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
-        <Input
-          placeholder="Search by Part#"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="flex-1"
-        />
+
+      <form onSubmit={handleSearch} className="relative mb-6 flex gap-2">
+        <div className="relative flex-1">
+          <Input
+            placeholder="Search by Ref#"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="pr-10"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-gray-700"
+              aria-label="Clear search"
+            >
+              <X size={18} />
+            </button>
+          )}
+        </div>
         <Button type="submit" disabled={loading}>
           {loading ? "Searching..." : "Search"}
         </Button>
@@ -110,14 +162,13 @@ export default function ProductList({ initialArticles }: ProductListProps) {
           />
         ))}
 
-        {/* Inline Skeletons for "Load More" */}
         {loadingMore &&
           Array.from({ length: pageSize }).map((_, idx) => (
             <ProductCardSkeleton key={`skeleton-${idx}`} />
           ))}
       </div>
 
-      {/* Load More Button */}
+      {/* Load More */}
       {hasMore && !loading && (
         <div className="mt-6 flex justify-center">
           <Button onClick={loadMore} disabled={loadingMore}>
@@ -126,7 +177,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
         </div>
       )}
 
-      {/* Empty state */}
+      {/* Empty State */}
       {!loading && articles.length === 0 && (
         <div className="mt-8 text-center text-gray-500">No products found.</div>
       )}

@@ -1,8 +1,9 @@
 "use client";
 
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Input } from "@/components/ui/input";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface ProductSearchInputs {
   partNumber?: string;
@@ -38,12 +39,12 @@ export default function ProductSearchForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 mb-6"
+      className="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
     >
       <Controller
         name="partNumber"
         control={control}
-        render={({ field }) => <Input {...field} placeholder="Part #" />}
+        render={({ field }) => <Input {...field} placeholder="Ref #" />}
       />
       <Controller
         name="maker"
@@ -66,7 +67,7 @@ export default function ProductSearchForm({
         render={({ field }) => <Input {...field} placeholder="Application" />}
       />
 
-      <div className="flex col-span-full gap-2 mt-2">
+      <div className="col-span-full mt-2 flex gap-2">
         <Button type="submit" disabled={loading}>
           {loading ? "Searching..." : "Search"}
         </Button>
