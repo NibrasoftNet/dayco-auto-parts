@@ -36,6 +36,8 @@ import type {
   VehicleTypeDetailsType,
 } from "@/types/vehicles.type";
 import { VehiclesType } from "@/utils/constants/constants";
+import Image from "next/image";
+import { getManufacturerProperty } from "@/lib/methods";
 
 const VehicleSearch = () => {
   const queryClient = useQueryClient();
@@ -280,7 +282,18 @@ const VehicleSearch = () => {
                       <SelectItem
                         key={m.manufacturerId}
                         value={String(m.manufacturerId)}
+                        className="flex gap-1 items-center"
                       >
+                        <Image
+                          src={
+                            (getManufacturerProperty(1, m.manufacturerId, "imageURL") as string) ||
+                            "/manufacturers/MANUFACTURER.svg"
+                          }
+                          alt={m.brand}
+                          width={50}
+                          height={15}
+                          className="rounded-md object-contain"
+                        />
                         {m.brand}
                       </SelectItem>
                     ),

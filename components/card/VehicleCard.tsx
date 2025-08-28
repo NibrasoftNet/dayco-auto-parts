@@ -101,7 +101,7 @@ const VehicleCard = ({ details }: { details: VehicleDecodeResponseType }) => {
             <Image
               src={
                 (getManufacturerProperty(1, v.manuId, "imageURL") as string) ||
-                "/placeholder.png"
+                "/manufacturers/MANUFACTURER.svg"
               }
               alt={v.carName}
               width={200}

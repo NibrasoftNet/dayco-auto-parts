@@ -40,4 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+b2b-db-dump.sql
 /generated/prisma
