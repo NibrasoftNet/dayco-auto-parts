@@ -1,14 +1,16 @@
 "use client";
 
+import type * as React from "react";
+
 import {
   AudioWaveform,
+  Boxes,
   ChartPie,
   Command,
   GalleryVerticalEnd,
   Search,
   ShoppingCart,
 } from "lucide-react";
-import type * as React from "react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -50,6 +52,11 @@ const data = {
       title: "Search",
       url: "/dashboard/search",
       icon: Search,
+    },
+    {
+      title: "Products",
+      url: "/dashboard/products",
+      icon: Boxes,
     },
     {
       title: "Orders",
