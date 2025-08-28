@@ -21,3 +21,15 @@ export type ModelType = {
   capacityTech: string | null; // e.g. "1760.0000"
   engineCodes: string | null; // can be null or comma-separated string like "ZZ,ZS"
 };
+
+export type VehicleModelTypeResponseType = {
+  countModels: number;
+  models: VehicleModelType[];
+};
+
+export type VehicleModelType = {
+  modelId: number;
+  modelName: string;
+  modelYearFrom: string;
+  modelYearTo: string | null;
+};

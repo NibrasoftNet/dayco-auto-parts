@@ -1,21 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-
-import { ExternalLink, ShoppingCart, Star } from "lucide-react";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { listVehicleEngineTypes } from "@/actions/vehicle-information.actions";
 import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalTrigger,
-} from "@/components/ui/animated-modal";
-import { Badge } from "@/components/ui/badge";
+  fetchManufacturersAction,
+  fetchModelsAction,
+  fetchVehicleDetailsAction,
+} from "@/actions/vehicles.actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -27,248 +24,385 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type {
+  ModelType,
+  ModelTypeResponseType,
+  VehicleModelType,
+  VehicleModelTypeResponseType,
+} from "@/types/model-vehicles.type";
+import type {
+  ManufacturerDetailsType,
+  VehicleManufacturerType,
+  VehicleTypeDetailsType,
+} from "@/types/vehicles.type";
+import { VehiclesType } from "@/utils/constants/constants";
 
 const VehicleSearch = () => {
-  const [vehicleSearchResults, setVehicleSearchResults] = useState<any[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const queryClient = useQueryClient();
+  const [vehicleType, setVehicleType] = useState<number | null>(null);
+  const [manufacturer, setManufacturer] = useState<number | null>(null);
+  const [model, setModel] = useState<number | null>(null);
+  const [engine, setEngine] = useState<number | null>(null);
 
-  const handleSearch = async (searchType: string, query: any) => {
-    setIsSearching(true);
-    // Simulate API call
-    setTimeout(() => {
-      setVehicleSearchResults([
-        {
-          id: 1,
-          name: "Premium Brake Pad Set - Front",
-          partNumber: "BP-2018-HC-F",
-          brand: "AutoStop Pro",
-          price: 89.99,
-          rating: 4.8,
-          reviews: 124,
-          compatibility: "Honda Civic 2018-2021",
-          inStock: true,
-          image: "/parts/brake-pads-close-up.jpg",
-        },
-        {
-          id: 2,
-          name: "Ceramic Brake Pads - Front Axle",
-          partNumber: "CBP-HC18-001",
-          brand: "StopTech",
-          price: 124.99,
-          rating: 4.9,
-          reviews: 89,
-          compatibility: "Honda Civic 2018-2021",
-          inStock: true,
-          image: "/parts/ceramic-brake-pads.jpg",
-        },
-        {
-          id: 3,
-          name: "OEM Replacement Brake Pads",
-          partNumber: "45022-S5A-000",
-          brand: "Honda Genuine",
-          price: 156.99,
-          rating: 5.0,
-          reviews: 67,
-          compatibility: "Honda Civic 2018-2021",
-          inStock: false,
-          image: "/parts/pwr-16-1855_xe_xl.jpg",
-        },
-      ]);
-      setIsSearching(false);
-    }, 1500);
+  // --- Manufacturer Mutation
+  const {
+    data: manufacturers,
+    isPending: manufacturersPending,
+    mutateAsync: loadManufacturers,
+  } = useMutation({
+    mutationKey: ["manufacturers"],
+    mutationFn: async (typeId: number) => {
+      if (!vehicleType) return [];
+      // ✅ check cache
+      const cached = queryClient.getQueryData(["manufacturers", typeId]);
+      if (cached) return cached;
+
+      const result = await fetchManufacturersAction(typeId);
+      queryClient.setQueryData(["manufacturers", typeId], result);
+      return result;
+    },
+    onSuccess: (searchResult: VehicleManufacturerType) => {
+      console.log("res", searchResult);
+      if (searchResult.countManufactures) {
+        toast.success("Success", {
+          description: "Success Search",
+        });
+        return searchResult;
+      } else {
+        toast.error("Failure", {
+          description: JSON.stringify(searchResult),
+        });
+        return null;
+      }
+    },
+    onError: (err) => {
+      toast.error("Failed to load manufacturers", {
+        description: String(err),
+      });
+    },
+  });
+
+  // --- Models Mutation
+  const {
+    data: modelsList,
+    isPending: modelsPending,
+    mutateAsync: loadModels,
+  } = useMutation({
+    mutationKey: ["models"],
+    mutationFn: async (manufacturerId: number) => {
+      if (!vehicleType) return [];
+      // ✅ check cache
+      const cached = queryClient.getQueryData(["models", manufacturerId]);
+      if (cached) return cached;
+
+      const result = await fetchModelsAction(manufacturerId, vehicleType);
+      queryClient.setQueryData(["models", manufacturerId], result);
+      return result;
+    },
+    onSuccess: (searchResult: VehicleModelTypeResponseType) => {
+      console.log("res", searchResult);
+      if (searchResult.models) {
+        toast.success("Success", {
+          description: "Success Search",
+        });
+        return searchResult;
+      } else {
+        toast.error("Failure", {
+          description: JSON.stringify(searchResult),
+        });
+        return null;
+      }
+    },
+    onError: (err) => {
+      toast.error("Failed to load manufacturers", {
+        description: String(err),
+      });
+    },
+  });
+
+  // --- Engine types Mutation
+  const {
+    data: enginesList,
+    isPending: enginesPending,
+    mutateAsync: loadEngines,
+  } = useMutation({
+    mutationKey: ["engines"],
+    mutationFn: async (modelsId: number) => {
+      if (!vehicleType || !manufacturer) return [];
+      // ✅ check cache
+      const cached = queryClient.getQueryData(["engines", modelsId]);
+      if (cached) return cached;
+
+      const result = await listVehicleEngineTypes(
+        modelsId,
+        manufacturer,
+        vehicleType,
+      );
+      queryClient.setQueryData(["engines", modelsId], result);
+      return result;
+    },
+    onSuccess: (searchResult: ModelTypeResponseType) => {
+      console.log("res", searchResult);
+      if (searchResult.modelTypes) {
+        toast.success("Success", {
+          description: "Success Search",
+        });
+        return searchResult;
+      } else {
+        toast.error("Failure", {
+          description: JSON.stringify(searchResult),
+        });
+        return null;
+      }
+    },
+    onError: (err) => {
+      toast.error("Failed to load engine types", {
+        description: String(err),
+      });
+    },
+  });
+
+  // --- Vehicle Mutation
+  const {
+    data: vehicleDetails,
+    isPending: vehiclePending,
+    mutateAsync: loadVehicleDetails,
+  } = useMutation({
+    mutationKey: ["vehicle"],
+    mutationFn: async (vehicleId: number) => {
+      if (!vehicleType || !manufacturer || !model) return [];
+      // ✅ check cache
+      const cached = queryClient.getQueryData(["vehicle", vehicleId]);
+      if (cached) return cached;
+
+      const result = await fetchVehicleDetailsAction(
+        vehicleId,
+        manufacturer,
+        vehicleType,
+      );
+      queryClient.setQueryData(["vehicle", vehicleId], result);
+      return result;
+    },
+    onSuccess: (searchResult: VehicleTypeDetailsType) => {
+      console.log("res", searchResult);
+      if (searchResult) {
+        toast.success("Success", {
+          description: "Success Search",
+        });
+        return searchResult;
+      } else {
+        toast.error("Failure", {
+          description: JSON.stringify(searchResult),
+        });
+        return null;
+      }
+    },
+    onError: (err) => {
+      toast.error("Failed to load engine types", {
+        description: String(err),
+      });
+    },
+  });
+
+  const handleVehicleTypeChange = async (val: string) => {
+    console.log("vvvv", val);
+    const typeId = Number(val);
+    setVehicleType(typeId);
+    setManufacturer(null); // reset manufacturer
+    await loadManufacturers(Number(val)); // load manufacturers for selected vehicle type
   };
+
+  const handleVehicleManufacturerSelect = async (val: string) => {
+    console.log("mmmm", val);
+    const manuId = Number(val);
+    setManufacturer(manuId);
+    setModel(null); // reset model
+    await loadModels(Number(val)); // load model for selected vehicle manufacturer
+  };
+
+  const handleVehicleModelSelect = async (val: string) => {
+    console.log("eeee", val);
+    const modelId = Number(val);
+    setModel(modelId);
+    setEngine(null); // reset engine
+    await loadEngines(Number(val)); // load engines for selected vehicle model
+  };
+
+  const handleVehicleEngineSelect = async (val: string) => {
+    console.log("eeee", val);
+    const vehicleId = Number(val);
+    setEngine(vehicleId);
+    await loadVehicleDetails(Number(val)); // load vehicle for selected engine
+  };
+
   return (
     <section>
-      <div className="flex w-full flex-col items-center">
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="flex flex-col w-full items-center gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+          {/* Vehicle Type */}
           <div className="col-span-1">
-            <Label htmlFor="year">Year</Label>
-            <Select>
+            <Label htmlFor="vehicleType">Vehicle Type</Label>
+            <Select
+              defaultValue={undefined}
+              onValueChange={(value) => handleVehicleTypeChange(value)}
+            >
               <SelectTrigger className="mt-1 w-full">
-                <SelectValue placeholder="Select year" />
+                <SelectValue placeholder="Select vehicle type" />
               </SelectTrigger>
               <SelectContent>
-                {Array.from({ length: 30 }, (_, i) => 2024 - i).map((year) => (
-                  <SelectItem key={year} value={year.toString()}>
-                    {year}
+                {VehiclesType.map((v) => (
+                  <SelectItem key={v.id} value={String(v.id)}>
+                    {v.value}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
+          {/* Manufacturer */}
           <div>
-            <Label htmlFor="make">Make</Label>
-            <Select>
+            <Label htmlFor="manufacturer">Manufacturer</Label>
+            <Select
+              disabled={!vehicleType || manufacturersPending}
+              onValueChange={(value) => handleVehicleManufacturerSelect(value)}
+            >
               <SelectTrigger className="mt-1 w-full">
-                <SelectValue placeholder="Select make" />
+                <SelectValue
+                  placeholder={
+                    manufacturersPending ? "Loading..." : "Select manufacturer"
+                  }
+                />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="honda">Honda</SelectItem>
-                <SelectItem value="toyota">Toyota</SelectItem>
-                <SelectItem value="ford">Ford</SelectItem>
-                <SelectItem value="chevrolet">Chevrolet</SelectItem>
-                <SelectItem value="nissan">Nissan</SelectItem>
+                {manufacturers &&
+                  manufacturers.manufacturers.length &&
+                  manufacturers?.manufacturers.map(
+                    (m: ManufacturerDetailsType) => (
+                      <SelectItem
+                        key={m.manufacturerId}
+                        value={String(m.manufacturerId)}
+                      >
+                        {m.brand}
+                      </SelectItem>
+                    ),
+                  )}
               </SelectContent>
             </Select>
           </div>
+          {/* Models */}
           <div>
-            <Label htmlFor="model">Model</Label>
-            <Select>
+            <Label htmlFor="models">Model</Label>
+            <Select
+              disabled={!manufacturer || modelsPending}
+              onValueChange={(value) => handleVehicleModelSelect(value)}
+            >
               <SelectTrigger className="mt-1 w-full">
-                <SelectValue placeholder="Select model" />
+                <SelectValue
+                  placeholder={
+                    modelsPending ? "Loading..." : "Select manufacturer"
+                  }
+                />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="civic">Civic</SelectItem>
-                <SelectItem value="accord">Accord</SelectItem>
-                <SelectItem value="crv">CR-V</SelectItem>
-                <SelectItem value="pilot">Pilot</SelectItem>
+                {modelsList &&
+                  modelsList.models.length &&
+                  modelsList.models.map((m: VehicleModelType) => (
+                    <SelectItem key={m.modelId} value={String(m.modelId)}>
+                      {m.modelName}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           </div>
+          {/* Engines */}
           <div>
-            <Label htmlFor="engine">Engine (Optional)</Label>
-            <Select>
+            <Label htmlFor="engines">Engines</Label>
+            <Select
+              disabled={!model || enginesPending}
+              onValueChange={(value) => handleVehicleEngineSelect(value)}
+            >
               <SelectTrigger className="mt-1 w-full">
-                <SelectValue placeholder="Select engine" />
+                <SelectValue
+                  placeholder={
+                    enginesPending ? "Loading..." : "Select Engine Type..."
+                  }
+                />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1.5l">1.5L Turbo</SelectItem>
-                <SelectItem value="2.0l">2.0L</SelectItem>
-                <SelectItem value="2.4l">2.4L</SelectItem>
+                {enginesList &&
+                  enginesList.modelTypes.length &&
+                  enginesList.modelTypes.map((m: ModelType) => (
+                    <SelectItem key={m.vehicleId} value={String(m.vehicleId)}>
+                      {m.modelName}, {m.powerPs}PS, {m.fuelType}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           </div>
         </div>
-        <div className="mt-2 w-full">
-          <Label htmlFor="part-type">Part Type</Label>
-          <Select>
-            <SelectTrigger className="mt-1 w-full">
-              <SelectValue placeholder="What part are you looking for?" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="brake-pads">Brake Pads</SelectItem>
-              <SelectItem value="oil-filter">Oil Filter</SelectItem>
-              <SelectItem value="air-filter">Air Filter</SelectItem>
-              <SelectItem value="spark-plugs">Spark Plugs</SelectItem>
-              <SelectItem value="battery">Battery</SelectItem>
-              <SelectItem value="alternator">Alternator</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <Button
-          onClick={() => handleSearch("vehicle", {})}
-          disabled={isSearching}
-          className="mt-4 w-full"
-        >
-          {isSearching ? "Searching..." : "Search by Vehicle"}
-        </Button>
       </div>
       {/* Search Results */}
-      {vehicleSearchResults.length > 0 && (
-        <Card className="w-full">
+      {manufacturersPending ||
+      modelsPending ||
+      enginesPending ||
+      vehiclePending ? (
+        <div className="size-full flex items-center justify-center">
+          Loading data..
+        </div>
+      ) : vehicleDetails ? (
+        <Card className="w-full max-w-lg shadow-md mt-8">
           <CardHeader>
-            <CardTitle className="font-serif font-black">
-              Search Results
+            <CardTitle className="text-xl font-semibold">
+              {vehicleDetails.vehicleTypeDetails.brand} —{" "}
+              {vehicleDetails.vehicleTypeDetails.modelType}
             </CardTitle>
-            <CardDescription>
-              Found {vehicleSearchResults.length} compatible parts for your
-              vehicle
-            </CardDescription>
+            <p className="text-sm text-muted-foreground">
+              {vehicleDetails.vehicleTypeDetails.constructionIntervalStart} →{" "}
+              {vehicleDetails.vehicleTypeDetails.constructionIntervalEnd}
+            </p>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {vehicleSearchResults.map((part) => (
-                <div
-                  key={part.id}
-                  className="border-border flex items-center space-x-4 rounded-lg border p-4"
-                >
-                  <img
-                    src={part.image || "/placeholder.svg"}
-                    alt={part.name}
-                    className="bg-muted h-20 w-20 rounded-md object-cover"
-                  />
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="font-serif text-lg font-black">
-                          {part.name}
-                        </h3>
-                        <p className="text-muted-foreground text-sm">
-                          Part #: {part.partNumber}
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                          Brand: {part.brand}
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                          Fits: {part.compatibility}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-foreground font-serif text-2xl font-black">
-                          ${part.price}
-                        </p>
-                        <div className="mt-1 flex items-center space-x-1">
-                          <Star className="h-4 w-4 fill-current text-yellow-400" />
-                          <span className="text-sm">{part.rating}</span>
-                          <span className="text-muted-foreground text-sm">
-                            ({part.reviews})
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        {part.inStock ? (
-                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-                            In Stock
-                          </Badge>
-                        ) : (
-                          <Badge variant="secondary">Out of Stock</Badge>
-                        )}
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="flex items-center justify-center py-40">
-                          <Modal>
-                            <ModalTrigger className="group/modal-btn flex justify-center bg-black text-white dark:bg-white dark:text-black">
-                              <span className="items center flex gap-4">
-                                <ExternalLink className="mr-2 h-4 w-4" />
-                                View Details
-                              </span>
-                            </ModalTrigger>
-                            <ModalBody>
-                              <ModalContent>
-                                <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 md:text-2xl dark:text-neutral-100">
-                                  Book your trip to{" "}
-                                  <span className="rounded-md border border-gray-200 bg-gray-100 px-1 py-0.5 dark:border-neutral-700 dark:bg-neutral-800">
-                                    Bali
-                                  </span>{" "}
-                                  now! ✈️
-                                </h4>
-                                <div>Content</div>
-                              </ModalContent>
-                              <ModalFooter className="gap-4">
-                                <span className="w-28 rounded-md border border-gray-300 bg-gray-200 px-2 py-1 text-sm text-black dark:border-black dark:bg-black dark:text-white">
-                                  Cancel
-                                </span>
-                                <span className="w-28 rounded-md border border-black bg-black px-2 py-1 text-sm text-white dark:bg-white dark:text-black">
-                                  Book Now
-                                </span>
-                              </ModalFooter>
-                            </ModalBody>
-                          </Modal>
-                        </div>
-                        <Button size="sm" disabled={!part.inStock}>
-                          <ShoppingCart className="mr-2 h-4 w-4" />
-                          Add to Cart
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <CardContent className="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <p className="font-medium">Engine</p>
+              <p>{vehicleDetails.vehicleTypeDetails.typeEngine}</p>
+            </div>
+            <div>
+              <p className="font-medium">Fuel</p>
+              <p>{vehicleDetails.vehicleTypeDetails.fuelType}</p>
+            </div>
+            <div>
+              <p className="font-medium">Power</p>
+              <p>
+                {vehicleDetails.vehicleTypeDetails.powerKw} kW /{" "}
+                {vehicleDetails.vehicleTypeDetails.powerPs} PS
+              </p>
+            </div>
+            <div>
+              <p className="font-medium">Capacity</p>
+              <p>{vehicleDetails.vehicleTypeDetails.capacityLt} L</p>
+            </div>
+            <div>
+              <p className="font-medium">Body</p>
+              <p>{vehicleDetails.vehicleTypeDetails.bodyType}</p>
+            </div>
+            <div>
+              <p className="font-medium">Drive</p>
+              <p>{vehicleDetails.vehicleTypeDetails.driveType ?? "—"}</p>
+            </div>
+            <div>
+              <p className="font-medium">Engine Code</p>
+              <p>{vehicleDetails.vehicleTypeDetails.engCodes}</p>
+            </div>
+            <div>
+              <p className="font-medium">Catalyst</p>
+              <p>{vehicleDetails.vehicleTypeDetails.catalysatorType ?? "—"}</p>
             </div>
           </CardContent>
+          <CardFooter>
+            <Button>Parts Category</Button>
+          </CardFooter>
         </Card>
+      ) : (
+        <div>No data found</div>
       )}
     </section>
   );

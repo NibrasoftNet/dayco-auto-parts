@@ -35,6 +35,7 @@ const VehicleCard = ({ details }: { details: VehicleDecodeResponseType }) => {
         const data: ModelTypeResponseType = await listVehicleEngineTypes(
           model.modelId,
           model.manuId,
+          1,
         );
         toast.dismiss(toastId);
         if (data && data.modelTypes) {

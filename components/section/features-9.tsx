@@ -1,9 +1,7 @@
 "use client";
-
 import DottedMap from "dotted-map";
 import { Activity, Map as MapIcon, MessageCircle } from "lucide-react";
 import { Area, AreaChart, CartesianGrid } from "recharts";
-
 import { Logo } from "@/components/logo";
 import {
   type ChartConfig,
@@ -20,25 +18,25 @@ export default function FeaturesSection() {
           <div className="p-6 sm:p-12">
             <span className="text-muted-foreground flex items-center gap-2">
               <MapIcon className="size-4" />
-              Real time location tracking
+              Fast Order request and delivery
             </span>
 
             <p className="mt-8 text-2xl font-semibold">
-              Advanced tracking system, Instantly locate all your assets.
+              We create a B2B solution for our client satisfaction.
             </p>
           </div>
 
           <div aria-hidden className="relative">
             <div className="absolute inset-0 z-10 m-auto size-fit">
-              <div className="bg-background dark:bg-muted relative z-1 flex size-fit w-fit items-center gap-2 rounded-(--radius) border px-3 py-1 text-xs font-medium shadow-md shadow-zinc-950/5">
-                <span className="text-lg">🇨🇩</span> Last connection from DR
-                Congo
+              <div className="rounded-(--radius) bg-background z-1 dark:bg-muted relative flex size-fit w-fit items-center gap-2 border px-3 py-1 text-xs font-medium shadow-md shadow-zinc-950/5">
+                <span className="text-lg">🇹🇳</span>
+                Tunis, Sousse,Tunisia
               </div>
-              <div className="bg-background absolute inset-2 -bottom-2 mx-auto rounded-(--radius) border px-3 py-4 text-xs font-medium shadow-md shadow-zinc-950/5 dark:bg-zinc-900"></div>
+              <div className="rounded-(--radius) bg-background absolute inset-2 -bottom-2 mx-auto border px-3 py-4 text-xs font-medium shadow-md shadow-zinc-950/5 dark:bg-zinc-900"></div>
             </div>
 
             <div className="relative overflow-hidden">
-              <div className="to-background absolute inset-0 z-1 bg-radial from-transparent to-75%"></div>
+              <div className="bg-radial z-1 to-background absolute inset-0 from-transparent to-75%"></div>
               <Map />
             </div>
           </div>
@@ -64,13 +62,13 @@ export default function FeaturesSection() {
                   Sat 22 Feb
                 </span>
               </div>
-              <div className="bg-background mt-1.5 w-3/5 rounded-(--radius) border p-3 text-xs">
-                Hey, I&apos;m having trouble with my account.
+              <div className="rounded-(--radius) bg-background mt-1.5 w-3/5 border p-3 text-xs">
+                Hey, I&#39;m having trouble with my account.
               </div>
             </div>
 
             <div>
-              <div className="mb-1 ml-auto w-3/5 rounded-(--radius) bg-blue-600 p-3 text-xs text-white">
+              <div className="rounded-(--radius) mb-1 ml-auto w-3/5 bg-blue-600 p-3 text-xs text-white">
                 Molestiae numquam debitis et ullam distinctio provident nobis
                 repudiandae deleniti necessitatibus.
               </div>
@@ -86,17 +84,17 @@ export default function FeaturesSection() {
           </p>
         </div>
         <div className="relative col-span-full">
-          <div className="absolute z-10 max-w-lg px-6 pt-6 pr-12 md:px-12 md:pt-12">
+          <div className="absolute z-10 max-w-lg px-6 pr-12 pt-6 md:px-12 md:pt-12">
             <span className="text-muted-foreground flex items-center gap-2">
               <Activity className="size-4" />
               Activity feed
             </span>
 
             <p className="my-8 text-2xl font-semibold">
-              Monitor your application&apos;s activity in real-time.{" "}
+              Monitor your orders in real-time.{" "}
               <span className="text-muted-foreground">
                 {" "}
-                Instantly identify and resolve issues.
+                Instantly verify your orders status.
               </span>
             </p>
           </div>
@@ -136,27 +134,27 @@ const Map = () => {
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Delivered",
     color: "#2563eb",
   },
   mobile: {
-    label: "Mobile",
+    label: "Ordered",
     color: "#60a5fa",
   },
 } satisfies ChartConfig;
 
 const chartData = [
-  { month: "May", desktop: 56, mobile: 224 },
-  { month: "June", desktop: 56, mobile: 224 },
-  { month: "January", desktop: 126, mobile: 252 },
-  { month: "February", desktop: 205, mobile: 410 },
-  { month: "March", desktop: 200, mobile: 126 },
-  { month: "April", desktop: 400, mobile: 800 },
+  { month: "May", delivered: 56, ordered: 224 },
+  { month: "June", delivered: 56, ordered: 224 },
+  { month: "January", delivered: 126, ordered: 252 },
+  { month: "February", delivered: 205, ordered: 410 },
+  { month: "March", delivered: 200, ordered: 126 },
+  { month: "April", delivered: 400, ordered: 800 },
 ];
 
 const MonitoringChart = () => {
   return (
-    <ChartContainer className="aspect-auto h-120 md:h-96" config={chartConfig}>
+    <ChartContainer className="h-120 aspect-auto md:h-96" config={chartConfig}>
       <AreaChart
         accessibilityLayer
         data={chartData}
@@ -199,7 +197,7 @@ const MonitoringChart = () => {
         />
         <Area
           strokeWidth={2}
-          dataKey="mobile"
+          dataKey="ordered"
           type="stepBefore"
           fill="url(#fillMobile)"
           fillOpacity={0.1}
@@ -208,7 +206,7 @@ const MonitoringChart = () => {
         />
         <Area
           strokeWidth={2}
-          dataKey="desktop"
+          dataKey="delivered"
           type="stepBefore"
           fill="url(#fillDesktop)"
           fillOpacity={0.1}

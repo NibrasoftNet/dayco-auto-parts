@@ -1,7 +1,5 @@
 "use server";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import axios from "axios";
 
 export const searchByOemNumberAction = async (oemNumber: string) => {
@@ -11,15 +9,17 @@ export const searchByOemNumberAction = async (oemNumber: string) => {
       maxBodyLength: Infinity,
       url: `https://tecdoc-catalog.p.rapidapi.com/articles-oem/search/lang-id/6/article-oem-search-no/${oemNumber}`,
       headers: {
-        "x-rapidapi-host": "tecdoc-catalog.p.rapidapi.com",
-        "x-rapidapi-key": "634b15956cmsh1ab18d741e086a4p12c1d0jsna4ee8534cd4c",
+        "x-rapidapi-host": process.env.RAPIDAPI_HOST,
+        "x-rapidapi-key": process.env.RAPIDAPI_KEY,
       },
     };
 
     const { data } = await axios.request(config);
     console.log("Response:", JSON.stringify(data, null, 2));
     return data;
-  } catch (error: any) {
+  }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
     console.error("Error:", error.message);
     if (error.response) {
       console.error("Status:", error.response.status);

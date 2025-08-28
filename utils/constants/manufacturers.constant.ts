@@ -12,14 +12,14 @@ export const MANUFACTURERS: Record<
 > = {
   1: {
     5400: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.kymco.com",
+      imageURL: "/manufacturers/KYMCO.png",
       manufacturerId: 5400,
       brand: "22KYMCO",
     },
     3854: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.abarth.com",
+      imageURL: "/manufacturers/ABARTH.png",
       manufacturerId: 3854,
       brand: "ABARTH",
     },
@@ -354,8 +354,8 @@ export const MANUFACTURERS: Record<
       brand: "AUDI",
     },
     2858: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.audi.com",
+      imageURL: "/manufacturers/AUDI.png",
       manufacturerId: 2858,
       brand: "AUDI (FAW)",
     },
@@ -726,14 +726,14 @@ export const MANUFACTURERS: Record<
       brand: "BLUECAR",
     },
     16: {
-      websiteURL: "https://www.dayco.com",
+      websiteURL: "https://www.bmw.com",
       imageURL: "/manufacturers/MANUFACTURER.svg",
       manufacturerId: 16,
       brand: "BMW",
     },
     3124: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      imageURL: "/manufacturers/BMW.png",
       manufacturerId: 3124,
       brand: "BMW (BRILLIANCE)",
     },
@@ -1392,8 +1392,8 @@ export const MANUFACTURERS: Record<
       brand: "DINGLER",
     },
     29: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.dodge.com",
+      imageURL: "/manufacturers/DODGE.png",
       manufacturerId: 29,
       brand: "DODGE",
     },
@@ -1758,8 +1758,8 @@ export const MANUFACTURERS: Record<
       brand: "FERRARI",
     },
     35: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.fiat.com",
+      imageURL: "/manufacturers/FIAT.png",
       manufacturerId: 35,
       brand: "FIAT",
     },
@@ -2586,8 +2586,8 @@ export const MANUFACTURERS: Record<
       brand: "HYOSUNG",
     },
     183: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.hyundai.com",
+      imageURL: "/manufacturers/HYUNDAI.png",
       manufacturerId: 183,
       brand: "HYUNDAI",
     },
@@ -4260,8 +4260,8 @@ export const MANUFACTURERS: Record<
       brand: "PERODUA",
     },
     88: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.peugeot.fr",
+      imageURL: "/manufacturers/PEUGEOT.png",
       manufacturerId: 88,
       brand: "PEUGEOT",
     },
@@ -6692,7 +6692,7 @@ export const MANUFACTURERS: Record<
       brand: "CHEREAU",
     },
     138: {
-      websiteURL: "https://www.dayco.com",
+      websiteURL: "https://www.chevrolet.com",
       imageURL: "/manufacturers/MANUFACTURER.svg",
       manufacturerId: 138,
       brand: "CHEVROLET",
@@ -6728,8 +6728,8 @@ export const MANUFACTURERS: Record<
       brand: "CHTZ-URALTRAC",
     },
     21: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.citroen.com",
+      imageURL: "/manufacturers/CITROEN.png",
       manufacturerId: 21,
       brand: "CITROËN",
     },
@@ -7928,8 +7928,8 @@ export const MANUFACTURERS: Record<
       brand: "KHD",
     },
     184: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.kia.com",
+      imageURL: "/manufacturers/KIA.png",
       manufacturerId: 184,
       brand: "KIA",
     },
@@ -9542,8 +9542,8 @@ export const MANUFACTURERS: Record<
       brand: "VSTSHAKTI",
     },
     121: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.svg",
+      websiteURL: "https://www.volkswagen.com",
+      imageURL: "/manufacturers/VW.png",
       manufacturerId: 121,
       brand: "VW",
     },

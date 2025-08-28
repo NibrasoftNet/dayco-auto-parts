@@ -1,16 +1,19 @@
-import Image from "next/image";
-import HeroSection from "@/components/hero-section";
-import FeaturesSection from "@/components/features-9";
-import StatsSection from "@/components/stats";
-import FooterSection from "@/components/footer";
+import FeaturesSection from "@/components/section/features-9";
+import FooterSection from "@/components/section/footer";
+import HeroSection from "@/components/section/hero-section";
+import ProductsSection from "@/components/section/ProductSection";
+import ShoppingSection from "@/components/section/ShoppingSection";
+import StatsSection from "@/components/section/stats";
 
 export default function Home() {
   return (
     <>
-        <HeroSection />
-        <FeaturesSection />
-        <StatsSection />
-        <FooterSection />
+      <HeroSection />
+      <ProductsSection />
+      <FeaturesSection />
+      <ShoppingSection />
+      <StatsSection />
+      <FooterSection />
     </>
   );
 }

@@ -1,5 +1,5 @@
 "use server";
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import axios from "axios";
 
 export const vehicleDecodeAction = async (vin: string) => {
@@ -9,14 +9,14 @@ export const vehicleDecodeAction = async (vin: string) => {
       maxBodyLength: Infinity,
       url: `https://tecdoc-catalog.p.rapidapi.com/vin/tecdoc-vin-check/${vin}`,
       headers: {
-        "x-rapidapi-host": "tecdoc-catalog.p.rapidapi.com",
-        "x-rapidapi-key": "634b15956cmsh1ab18d741e086a4p12c1d0jsna4ee8534cd4c",
+        "x-rapidapi-host": process.env.RAPIDAPI_HOST,
+        "x-rapidapi-key": process.env.RAPIDAPI_KEY,
       },
     };
-    //"776988775dmsh1b39d3f7260ce67p12ca2fjsnbbb250661f77"
     const { data } = await axios.request(config);
     console.log("Response:", JSON.stringify(data, null, 2));
     return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error:", error.message);
     if (error.response) {
