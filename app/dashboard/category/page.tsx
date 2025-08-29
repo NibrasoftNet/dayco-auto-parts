@@ -99,18 +99,22 @@ const ArticlesCategoryPage = () => {
   };
   return (
     <div>
-      <h1>Articles Category</h1>
+      <div className="flex flex-col gap-1">
+        <span className="font-normal underline">Category</span>
+        <h1 className="text-4xl font-semibold">Articles Category</h1>
+      </div>
       {isLoading || isFetching || isPending || isRefetching ? (
         <div>Loading...</div>
       ) : (
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ul className="flex size-full mt-4">
           {articlesCategoryResult ? (
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
               {Object.values(articlesCategoryResult.categories).map(
                 (category) => (
                   <AccordionItem
                     key={category.categoryId}
                     value={`cat-${category.categoryId}`}
+                    className="col-span-1"
                   >
                     <AccordionTrigger>{category.categoryName}</AccordionTrigger>
                     <AccordionContent>

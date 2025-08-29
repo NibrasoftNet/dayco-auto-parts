@@ -27,7 +27,7 @@ const ArticlePage = () => {
     isRefetching,
     isLoading,
   } = useQuery({
-    queryKey: ["list-articles", vehicleId, manuId, categoryId],
+    queryKey: ["list-articles", vehicleId, categoryId],
     queryFn: async () => {
       const toastId = toast("Begins...");
       toast.loading("Loading...", {

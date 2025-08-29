@@ -285,7 +285,7 @@ const VehicleSearch = () => {
                         <Image
                           src={
                             (getManufacturerProperty(1, m.manufacturerId, "imageURL") as string) ||
-                            "/manufacturers/MANUFACTURER.svg"
+                            "/manufacturers/MANUFACTURER.png"
                           }
                           alt={m.brand}
                           width={50}
