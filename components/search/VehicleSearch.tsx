@@ -137,7 +137,6 @@ const VehicleSearch = () => {
 
       const result = await listVehicleEngineTypes(
         modelsId,
-        manufacturer,
         vehicleType,
       );
       queryClient.setQueryData(["engines", modelsId], result);
@@ -179,7 +178,6 @@ const VehicleSearch = () => {
 
       const result = await fetchVehicleDetailsAction(
         vehicleId,
-        manufacturer,
         vehicleType,
       );
       queryClient.setQueryData(["vehicle", vehicleId], result);

@@ -39,7 +39,7 @@ const PartSearch = () => {
         console.log("using cached data for", articleNo);
         return cached; // skip API call
       }
-      const result = await singleArticleCompleteDetailsAction(articleNo);
+      const result = await singleArticleCompleteDetailsAction(articleNo, 1);
       // ✅ store in cache
       queryClient.setQueryData(["part-number", articleNo], result);
       return result;

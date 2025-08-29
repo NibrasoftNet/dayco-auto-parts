@@ -38,7 +38,7 @@ const ArticleListDetailsPage = () => {
       });
       try {
         const data: ArticleDetailsResponse =
-          await singleArticleCompleteDetailsAction(params.articleId);
+          await singleArticleCompleteDetailsAction(params.articleId, 1);
         toast.dismiss(toastId);
         if (data && data.articles) {
           toast.success("Success", {
@@ -93,7 +93,7 @@ const ArticleListDetailsPage = () => {
                     >
                       <article className="flex flex-col md:flex-row gap-2 items-start">
                         <Image
-                          src={article.s3ImageLink}
+                          src={article.imageLink || article.imageMedia || article.s3ImageLink}
                           width={50}
                           height={50}
                           alt="Articele Image"
