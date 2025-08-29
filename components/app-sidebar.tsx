@@ -6,7 +6,7 @@ import {
   AudioWaveform,
   Boxes,
   ChartPie,
-  Command,
+  Command, FactoryIcon,
   GalleryVerticalEnd,
   Search,
   ShoppingCart,
@@ -67,6 +67,11 @@ const data = {
       title: "Analytics",
       url: "/dashboard/analytics",
       icon: ChartPie,
+    },
+    {
+      title: "Manufacturers",
+      url: "/dashboard/manufacturers",
+      icon: FactoryIcon,
     },
   ],
 };

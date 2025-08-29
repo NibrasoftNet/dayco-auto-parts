@@ -40,6 +40,7 @@ const ArticlesCategoryPage = () => {
           await articlesPartsCategoryV2Action(
             Number(vehicleId),
             Number(manuId),
+            1,
           );
         toast.dismiss(toastId);
         if (data && data.categories) {

@@ -2,13 +2,17 @@
 
 import axios from "axios";
 
+
+
+
+
 export const fetchManufacturersAction = async (typeId: number) => {
   try {
     console.log("Fetching manufacturers for typeId:", typeId);
     const config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://tecdoc-catalog.p.rapidapi.com/manufacturers/list/lang-id/6/country-filter-id/250/type-id/${typeId}`,
+      url: `https://tecdoc-catalog.p.rapidapi.com/manufacturers/list/type-id/${typeId}`,
       headers: {
         "x-rapidapi-host": process.env.RAPIDAPI_HOST,
         "x-rapidapi-key": process.env.RAPIDAPI_KEY,
@@ -39,7 +43,7 @@ export const fetchModelsAction = async (
     const config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://tecdoc-catalog.p.rapidapi.com/models/list/manufacturer-id/${manufacturerId}/lang-id/6/country-filter-id/250/type-id/${typeId}`,
+      url: `https://tecdoc-catalog.p.rapidapi.com/models/list/type-id/${typeId}/manufacturer-id/${manufacturerId}/lang-id/6/country-filter-id/250`,
       headers: {
         "x-rapidapi-host": process.env.RAPIDAPI_HOST,
         "x-rapidapi-key": process.env.RAPIDAPI_KEY,
@@ -63,14 +67,13 @@ export const fetchModelsAction = async (
 
 export const fetchVehicleDetailsAction = async (
   vehicleId: number,
-  manuId: number,
   typeId: number,
 ) => {
   try {
     const config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://tecdoc-catalog.p.rapidapi.com/types/vehicle-type-details/${vehicleId}/manufacturer-id/${manuId}/lang-id/6/country-filter-id/250/type-id/${typeId}`,
+      url: `https://tecdoc-catalog.p.rapidapi.com/types/type-id/${typeId}/vehicle-type-details/${vehicleId}/lang-id/6/country-filter-id/250`,
       headers: {
         "x-rapidapi-host": process.env.RAPIDAPI_HOST,
         "x-rapidapi-key": process.env.RAPIDAPI_KEY,

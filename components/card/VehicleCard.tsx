@@ -25,6 +25,7 @@ const VehicleCard = ({ details }: { details: VehicleDecodeResponseType }) => {
     isLoading,
     isPending,
   } = useQuery({
+    queryKey: ["model-vehicle", model.modelId],
     queryFn: async () => {
       const toastId = toast("Begins...");
       toast.loading("Loading...", {
@@ -34,7 +35,6 @@ const VehicleCard = ({ details }: { details: VehicleDecodeResponseType }) => {
       try {
         const data: ModelTypeResponseType = await listVehicleEngineTypes(
           model.modelId,
-          model.manuId,
           1,
         );
         toast.dismiss(toastId);
@@ -57,7 +57,6 @@ const VehicleCard = ({ details }: { details: VehicleDecodeResponseType }) => {
         toast.dismiss(toastId);
       }
     },
-    queryKey: ["model-vehicle", model.modelId, manufacturer?.manuId],
     placeholderData: keepPreviousData,
     retryOnMount: false,
     refetchOnMount: false,
