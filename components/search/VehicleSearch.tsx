@@ -341,8 +341,8 @@ const VehicleSearch = () => {
               <SelectContent>
                 {enginesList &&
                   enginesList.modelTypes.length &&
-                  enginesList.modelTypes.map((m: ModelType) => (
-                    <SelectItem key={m.vehicleId} value={String(m.vehicleId)}>
+                  enginesList.modelTypes.map((m: ModelType, index: number) => (
+                    <SelectItem key={m.vehicleId + index } value={String(m.vehicleId)}>
                       {m.modelName}, {m.powerPs}PS, {m.fuelType}
                     </SelectItem>
                   ))}

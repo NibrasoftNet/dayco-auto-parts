@@ -32,12 +32,12 @@ const data = {
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: "STDP Inc",
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
     {
-      name: "Acme Corp.",
+      name: "STDP Corp.",
       logo: AudioWaveform,
       plan: "Startup",
     },
