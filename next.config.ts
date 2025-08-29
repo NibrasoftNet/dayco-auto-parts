@@ -26,7 +26,22 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "tecdoc2025.makingdatameaningful.com",
-        port: "",
+        pathname: "**",
+      },
+       {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "plus.unsplash.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "auto-car-parts.s3.us-east-1.amazonaws.com",
+        pathname: "**",
       },
     ],
   },

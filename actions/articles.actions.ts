@@ -1,6 +1,7 @@
 "use server";
 
 import axios from "axios";
+import { getProductDetails } from "./get-products";
 
 
 
@@ -53,6 +54,26 @@ export const singleArticleCompleteDetailsAction = async (articleNo: string, type
     const { data } = await axios.request(config);
     console.log("Response:", JSON.stringify(data, null, 2));
     return data;
+
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
+    console.error("Error:", error.message);
+    if (error.response) {
+      console.error("Status:", error.response.status);
+      console.error("Data:", error.response.data);
+      return error.response.data;
+    }
+    return error;
+  }
+};
+export const singleArticleCompleteDBDetailsAction = async (partRef: string,
+  partYear: string) => {
+  try {
+
+    const dbArticle = await getProductDetails(partRef, partYear);
+    console.log("Response:", JSON.stringify(dbArticle, null, 2));
+    return dbArticle;
 
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
