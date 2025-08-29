@@ -32,9 +32,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
   const abortRef = useRef<AbortController | null>(null);
   const pageSize = 20;
 
-  // ----------------------
   // Fetch products
-  // ----------------------
   const fetchProducts = useCallback(
     async (q: string, p: number, replace = false) => {
       // Abort previous request if still pending
@@ -62,9 +60,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
     []
   );
 
-  // ----------------------
   // Handle search
-  // ----------------------
   const handleSearch = useCallback(
     async (e?: React.FormEvent) => {
       if (e) e.preventDefault();
@@ -83,9 +79,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
     [query, fetchProducts, router]
   );
 
-  // ----------------------
   // Load more
-  // ----------------------
   const loadMore = useCallback(async () => {
     setLoadingMore(true);
     const nextPage = page + 1;
@@ -97,9 +91,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
     }
   }, [page, query, fetchProducts]);
 
-  // ----------------------
   // Initial load on mount (URL query)
-  // ----------------------
   useEffect(() => {
     const urlQuery = searchParams.get("q") || "";
     setQuery(urlQuery);
@@ -109,9 +101,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
     fetchProducts(urlQuery, 1, true).finally(() => setLoading(false));
   }, []); // only on mount
 
-  // ----------------------
   // Clear search
-  // ----------------------
   const clearSearch = useCallback(() => {
     setQuery(""); // clear input
     setPage(1); // reset pagination

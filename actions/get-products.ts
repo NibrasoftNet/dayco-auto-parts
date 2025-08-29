@@ -24,3 +24,32 @@ export async function getProducts(
 
   return withSyntheticId(rawProducts, ["cod", "reffrn", "codebar"]);
 }
+
+
+// Server-side only
+export async function getProductDetails(
+  partRef: string,
+  partYear: string
+): Promise<(Articles & { id: string }) | null> {
+  try {
+    const result = await db.$queryRaw<Articles[]>`
+      SELECT *
+      FROM articles
+      WHERE cod = ${partRef}
+        AND iann = ${partYear}
+    `;
+
+    if (!result || result.length === 0) {
+      return null;
+    }
+
+    return {
+      ...result[0],
+      id: `${result[0].cod}-${result[0].iann}`, // synthetic unique id
+    };
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return null;
+  }
+}
+
