@@ -70,6 +70,7 @@ const AutomobileList = () => {
                         className="rounded-md object-contain"
                       />
                       <span className="font-semibold text-center">{manu.brand}</span>
+                      <span className="font-semibold text-center">{manu.manufacturerId}</span>
                     </Link>
                   )
                 )}
