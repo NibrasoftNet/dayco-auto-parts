@@ -31,13 +31,11 @@ import type {
   VehicleModelTypeResponseType,
 } from "@/types/model-vehicles.type";
 import type {
-  ManufacturerDetailsType,
   VehicleManufacturerType,
   VehicleTypeDetailsType,
 } from "@/types/vehicles.type";
 import { VehiclesType } from "@/utils/constants/constants";
-import Image from "next/image";
-import { getManufacturerProperty } from "@/lib/methods";
+import { VirtualizedCombobox } from "@/components/combobox/ManufacurerComboBox";
 
 const VehicleSearch = () => {
   const queryClient = useQueryClient();
@@ -45,7 +43,6 @@ const VehicleSearch = () => {
   const [manufacturer, setManufacturer] = useState<number | null>(null);
   const [model, setModel] = useState<number | null>(null);
   const [engine, setEngine] = useState<number | null>(null);
-
   // --- Manufacturer Mutation
   const {
     data: manufacturers,
@@ -259,9 +256,18 @@ const VehicleSearch = () => {
             </Select>
           </div>
           {/* Manufacturer */}
-          <div>
+          <div className="col-span-1 flex flex-col justify-end">
             <Label htmlFor="manufacturer">Manufacturer</Label>
-            <Select
+            {
+              manufacturers && vehicleType
+                ? <VirtualizedCombobox
+                    isLoading={manufacturersPending || !vehicleType}
+                    options={manufacturers.manufacturers}
+                    handleChange={handleVehicleManufacturerSelect}
+                    vehicleType={vehicleType}
+                />
+                : <div className="flex w-full border border-gray-300 rounded-sm text-gray-500 text-sm h-9 p-2 shadow-xs">{manufacturersPending || !vehicleType ? <span>loading...</span> : <span>Select manufacturer...</span>}</div>}
+{/*            <Select
               disabled={!vehicleType || manufacturersPending}
               onValueChange={(value) => handleVehicleManufacturerSelect(value)}
             >
@@ -297,7 +303,7 @@ const VehicleSearch = () => {
                     ),
                   )}
               </SelectContent>
-            </Select>
+            </Select>*/}
           </div>
           {/* Models */}
           <div>
