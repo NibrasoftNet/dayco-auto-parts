@@ -14,7 +14,7 @@ const ArticleCard = ({ article }: { article: ArticleDetailType }) => {
     >
       <article className="flex flex-col items-start gap-2 md:flex-row">
         <Image
-          src={article.imageLink || article.imageMedia || article.s3ImageLink}
+          src={article.imageLink || article.imageMedia || article.s3ImageLink || article.s3image ||"/parts/PART.png"}
           width={50}
           height={50}
           alt="article-image"

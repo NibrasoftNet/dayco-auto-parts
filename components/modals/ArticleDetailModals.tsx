@@ -36,7 +36,7 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                 <div className="flex w-full justify-between">
                   <div className="flex items-center gap-4">
                     <Image
-                      src={article.imageLink || article.imageMedia || article.s3ImageLink}
+                      src={article.imageLink || article.imageMedia || article.s3ImageLink || article.s3image ||"/parts/PART.png"}
                       alt={article.articleProductName}
                       width={100}
                       height={100}
@@ -91,12 +91,7 @@ const ArticleDetailsModal = ({ article }: { article: ArticleDetailType }) => {
                       <li>
                         <strong>Website:</strong>&nbsp;
                         <Link
-                          href={
-                            getSupplierProperty(
-                              String(article.supplierId),
-                              "websiteURL",
-                            ) as string
-                          }
+                          href={`#`}
                           className="text-blue-500 hover:underline"
                         >
                           {getSupplierProperty(

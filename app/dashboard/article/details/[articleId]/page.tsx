@@ -93,7 +93,7 @@ const ArticleListDetailsPage = () => {
                     >
                       <article className="flex flex-col md:flex-row gap-2 items-start">
                         <Image
-                          src={article.imageLink || article.imageMedia || article.s3ImageLink}
+                          src={article.imageLink || article.imageMedia || article.s3ImageLink || article.s3image ||"/parts/PART.png"}
                           width={50}
                           height={50}
                           alt="Articele Image"

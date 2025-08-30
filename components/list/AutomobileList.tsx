@@ -58,7 +58,7 @@ const AutomobileList = () => {
             <ul className="flex flex-wrap gap-4">
               {
                 automobileListResult.manufacturers.map((manu) => (
-                    <Link href={'#'} key={manu.manufacturerId} className="w-48 h-48 flex flex-col items-center justify-center border rounded-lg p-4 hover:shadow-lg hover:scale-105 transition-all duration-200 ease-in-out gap-4">
+                    <Link href={`models?typeId=${1}&manuId=${manu.manufacturerId}`} key={manu.manufacturerId} className="w-48 h-48 flex flex-col items-center justify-center border rounded-lg p-4 hover:shadow-lg hover:scale-105 transition-all duration-200 ease-in-out gap-4">
                       <Image
                         src={
                           (getManufacturerProperty(1, manu.manufacturerId, "imageURL") as string) ||

@@ -87,43 +87,6 @@ const VinSearch = () => {
             VIN provides the most accurate part compatibility results
           </p>
         </div>
-        <RadioGroup
-          defaultValue="AUTOMOBILE"
-          className="mt-1 flex items-center gap-4"
-        >
-          <div className="flex items-center space-x-3">
-            <RadioGroupItem value="AUTOMOBILE" id="automobile" />
-            <Label
-              htmlFor="automobile"
-              className="flex cursor-pointer items-center space-x-2"
-            >
-              <Car className="size-10 text-black" />
-              <span>Automobile</span>
-            </Label>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <RadioGroupItem value="COMMERCIAL-VEHICLES" id="commercial" />
-            <Label
-              htmlFor="commercial"
-              className="flex cursor-pointer items-center space-x-2"
-            >
-              <Truck className="size-10 text-black" />
-              <span>Commercial Vehicles</span>
-            </Label>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <RadioGroupItem value="MOTOCYCLE" id="motorcycle" />
-            <Label
-              htmlFor="motorcycle"
-              className="flex cursor-pointer items-center space-x-2"
-            >
-              <Bike className="size-10 text-black" />
-              <span>Motorcycle</span>
-            </Label>
-          </div>
-        </RadioGroup>
         <Button
           onClick={() => handleVinSearch()}
           disabled={isPending || vin.length !== 17}

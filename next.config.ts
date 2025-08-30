@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
         hostname: "auto-car-parts.s3.us-east-1.amazonaws.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "fsn1.your-objectstorage.com",
+        pathname: "**",
+      },
     ],
   },
 };

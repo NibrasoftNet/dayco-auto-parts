@@ -2,28 +2,43 @@
 import type React from "react";
 import { useState } from "react";
 
+
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Bike, Bus, Car, Tractor, Truck } from "lucide-react";
 import { toast } from "sonner";
+
+
 
 import { singleArticleCompleteDetailsAction } from "@/actions/articles.actions";
 import ArticleCard from "@/components/card/ArticleCard";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type {
-  ArticleDetailType,
-  ArticleDetailsResponse,
-} from "@/types/articles.type";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import type { ArticleDetailType, ArticleDetailsResponse } from "@/types/articles.type";
+import { VehiclesType } from "@/utils/constants/constants";
+
+
+
+
+
+// optional: map values to icons
+const vehicleIcons: Record<string, React.ReactNode> = {
+  AUTOMOBILE: <Car className="size-10 text-black" />,
+  COMMERCIAL: <Truck className="size-10 text-black" />,
+  MOTO: <Bike className="size-10 text-black" />,
+  LCV: <Truck className="size-10 text-black" />,
+  DriverCab: <Car className="size-10 text-black" />,
+  Bus: <Bus className="size-10 text-black" />,
+  Tractor: <Tractor className="size-10 text-black" />,
+};
 
 const PartSearch = () => {
   const [articleNo, setArticleNo] = useState<string>("");
+  const [selectedId, setSelectedId] = useState<number>(1);
+
   const queryClient = useQueryClient();
 
   const {
@@ -39,7 +54,7 @@ const PartSearch = () => {
         console.log("using cached data for", articleNo);
         return cached; // skip API call
       }
-      const result = await singleArticleCompleteDetailsAction(articleNo, 1);
+      const result = await singleArticleCompleteDetailsAction(articleNo, selectedId);
       // ✅ store in cache
       queryClient.setQueryData(["part-number", articleNo], result);
       return result;
@@ -77,6 +92,15 @@ const PartSearch = () => {
       });
     }
   };
+
+  const handleChange = (value: string) => {
+    const selected = VehiclesType.find((v) => v.value === value);
+    if (selected) {
+      setSelectedId(selected.id);
+      console.log("Selected ID:", selected.id); // ✅ use this for fetch
+    }
+  };
+
   return (
     <section className="flex size-full flex-col gap-4">
       <div className="space-y-4">
@@ -93,6 +117,29 @@ const PartSearch = () => {
             Search using OEM or aftermarket part numbers
           </p>
         </div>
+        <RadioGroup
+          defaultValue={VehiclesType[0].value}
+          onValueChange={handleChange}
+          className="mt-1 flex flex-wrap gap-4"
+        >
+          {VehiclesType.map((vehicle) => (
+            <div
+              key={vehicle.id}
+              className="flex items-center space-x-3"
+            >
+              <RadioGroupItem value={vehicle.value} id={`vehicle-${vehicle.id}`} />
+              <Label
+                htmlFor={`vehicle-${vehicle.id}`}
+                className="flex cursor-pointer items-center space-x-2"
+              >
+                {vehicleIcons[vehicle.value] ?? (
+                  <Car className="size-10 text-gray-500" />
+                )}
+                <span>{vehicle.value}</span>
+              </Label>
+            </div>
+          ))}
+        </RadioGroup>
         <Button
           onClick={() => handleArticleSearch()}
           disabled={isPending || articleNo.length < 3}

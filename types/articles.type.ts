@@ -17,6 +17,7 @@ export type ArticleType = {
   imageLink: string;
   imageMedia: string;
   s3ImageLink: string;
+  s3image: string;
 };
 
 export type ArticleDetailsResponse = {
@@ -45,6 +46,7 @@ export type ArticleDetailType = {
   imageLink: string;
   imageMedia: string;
   s3ImageLink: string;
+  s3image: string;
   compatibleCars: CompatibleCarType[];
 };
 
