@@ -33,7 +33,7 @@ const ArticleListDetailsPage = () => {
     queryFn: async () => {
       const toastId = toast("Begins...");
       toast.loading("Loading...", {
-        description: "Create Community...",
+        description: "Listing....",
         id: toastId,
       });
       try {

@@ -32,7 +32,7 @@ const ArticlesCategoryPage = () => {
     queryFn: async () => {
       const toastId = toast("Begins...");
       toast.loading("Loading...", {
-        description: "Create Community...",
+        description: "List categories...",
         id: toastId,
       });
       try {
@@ -45,7 +45,7 @@ const ArticlesCategoryPage = () => {
         toast.dismiss(toastId);
         if (data && data.categories) {
           toast.success("Success", {
-            description: "Creation Success",
+            description: "List Success",
             id: toastId,
           });
           return data;

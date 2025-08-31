@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 /generated/prisma
-/pnpm-lock.yaml
+pnpm-lock.yaml
 #sql
 *.sql

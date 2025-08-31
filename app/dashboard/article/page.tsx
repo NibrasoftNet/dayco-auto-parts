@@ -31,7 +31,7 @@ const ArticlePage = () => {
     queryFn: async () => {
       const toastId = toast("Begins...");
       toast.loading("Loading...", {
-        description: "Create Community...",
+        description: "List Articles...",
         id: toastId,
       });
       try {
@@ -44,7 +44,7 @@ const ArticlePage = () => {
         toast.dismiss(toastId);
         if (data && data.vehicleId) {
           toast.success("Success", {
-            description: "Creation Success",
+            description: "List Success",
             id: toastId,
           });
           return data;
@@ -83,7 +83,7 @@ const ArticlePage = () => {
             </span>
           </div>
           <ul className="flex flex-col size-full gap-4">
-            {listArticlesResult?.articles.length &&
+            {listArticlesResult.articles && listArticlesResult?.articles.length &&
               listArticlesResult.articles.map((article: ArticleType) => (
                 <li
                   key={article.articleId}
