@@ -12,6 +12,7 @@ export type OemArticleType = {
   imageLink: string;
   imageMedia: string;
   s3ImageLink: string;
+  s3image: string;
 };
 
 export type OemArticleListType = OemArticleType[];

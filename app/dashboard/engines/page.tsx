@@ -1,29 +1,28 @@
-// app/models/page.tsx (Server Component)
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { QueryClient } from "@tanstack/react-query";
-import { fetchModelsAction } from "@/actions/vehicles.actions";
-import ModelList from "@/components/list/ModelList";
+import { listVehicleEngineTypes } from "@/actions/vehicle-information.actions";
+import EngineList from "@/components/list/EngineList";
 
 // ISR revalidate every 1 week
 export const revalidate = 604_800; // 1 week
 
-export default async function ModelsPage({ searchParams }: { searchParams: Promise<{ typeId: string; manuId: string }> }) {
+export default async function EnginesPage({ searchParams }: { searchParams: Promise<{ typeId: string; manuId: string;modelId: string }> }) {
   const search = await searchParams
   const queryClient = new QueryClient();
   console.log("SearchParams models page", search);
 
-  // Pre-fetch models data on the server
+  // Pre-fetch engine types data on the server
   await queryClient.prefetchQuery({
-    queryKey: ["models", search.manuId],
+    queryKey: ["engines", search.modelId],
     queryFn: () =>
-      fetchModelsAction(Number(search.manuId), Number(search.typeId)),
+      listVehicleEngineTypes(Number(search.modelId), Number(search.typeId)),
     staleTime: 1000 * 60 * 60 * 24 * 7, // 1 week
     gcTime: 1000 * 60 * 60 * 24 * 7,    // 1 week
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ModelList searchParams={search} />
+      <EngineList searchParams={search} />
     </HydrationBoundary>
   );
 }

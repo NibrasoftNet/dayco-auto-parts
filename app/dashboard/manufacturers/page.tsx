@@ -1,17 +1,40 @@
-"use client";
-
 import { Car, Package, Search } from "lucide-react";
 
+// ISR revalidate every 1 week
+export const revalidate = 604_800; // 604800 seconds = 1 week
 
-
-import AutomobileList from "@/components/list/AutomobileList";
-import CommercialList from "@/components/list/CommercialList";
-import MotoList from "@/components/list/MotoList";
+import VehicleList from "@/components/list/VehicleList";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { fetchManufacturersAction } from "@/actions/vehicles.actions";
 
-export default function ManufacturerPage() {
+export default async function ManufacturerPage() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["manufacturers", 1],
+    queryFn: () => fetchManufacturersAction(1),
+    staleTime: 1000 * 60 * 60 * 24 * 7, // 1 week in ms
+    gcTime: 1000 * 60 * 60 * 24 * 7, // 1 week in ms
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["manufacturers", 2],
+    queryFn: () => fetchManufacturersAction(2),
+    staleTime: 1000 * 60 * 60 * 24 * 7, // 1 week in ms
+    gcTime: 1000 * 60 * 60 * 24 * 7, // 1 week in msh
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["manufacturers", 3],
+    queryFn: () => fetchManufacturersAction(3),
+    staleTime: 1000 * 60 * 60 * 24 * 7, // 1 week in ms
+    gcTime: 1000 * 60 * 60 * 24 * 7, // 1 week in ms
+  });
+
   return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <Card>
         <CardHeader>
           <CardTitle className="font-serif font-black">
@@ -42,18 +65,19 @@ export default function ManufacturerPage() {
             </TabsList>
             {/* VIN Search */}
             <TabsContent value="auto" className="space-y-4">
-              <AutomobileList />
+              <VehicleList typeId={1} />
             </TabsContent>
             {/* Part Number Search */}
             <TabsContent value="comm" className="space-y-4">
-              <CommercialList />
+              <VehicleList typeId={2} />
             </TabsContent>
             {/* Vehicle Search */}
             <TabsContent value="moto" className="space-y-4">
-              <MotoList />
+              <VehicleList typeId={3} />
             </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
+    </HydrationBoundary>
   );
 }

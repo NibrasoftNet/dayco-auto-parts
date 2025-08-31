@@ -13,7 +13,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function DashboardLayout(props: {
     children: React.ReactNode;
@@ -44,7 +44,7 @@ export default function DashboardLayout(props: {
                         </Breadcrumb>
                     </div>
                 </header>
-                <main className="flex flex-1 flex-col gap-4 p-4">{props.children}</main>
+                <Suspense><main className="flex flex-1 flex-col gap-4 p-4">{props.children}</main></Suspense>
             </SidebarInset>
         </SidebarProvider>
     )

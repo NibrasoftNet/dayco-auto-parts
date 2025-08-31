@@ -8,10 +8,8 @@ import {
   X,
 } from "lucide-react";
 import { motion, useScroll } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -24,13 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
-const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
-];
 
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);

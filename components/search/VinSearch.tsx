@@ -1,10 +1,8 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Bike, Car, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 import { vehicleDecodeAction } from "@/actions/vin-decoder.actions";
@@ -13,8 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { VehicleDecodeResponseType } from "@/types/vehicle-decode.type";
-
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const VinSearch = () => {
   const [vin, setVin] = useState<string>("");
@@ -52,6 +48,7 @@ const VinSearch = () => {
         return null;
       }
     },
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     onError: (error: any) => {
       toast.error("Error", {
         description: `${error}`,

@@ -1,3 +1,7 @@
+export type VehicleListType = {
+  typeId: number;
+};
+
 export type VehiclesOptionsType = {
   id: number;
   value: string;

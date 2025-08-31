@@ -70,77 +70,77 @@ export default function HeroSection() {
                   <div className="relative py-6 md:w-[calc(100%-11rem)]">
                     <InfiniteSlider speedOnHover={20} speed={40} gap={112}>
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="20"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
 
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="16"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="16"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="20"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="20"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="16"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="28"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
 
                       <div className="flex">
-                        <img
+                        <Image
                           className="mx-auto h-20 w-fit dark:invert"
-                          src="suppliers-black/dayco.png"
+                          src="/suppliers-black/dayco.png"
                           alt="Dayco Logo"
-                          height="24"
-                          width="auto"
+                          height={20}
+                          width={50}
                         />
                       </div>
                     </InfiniteSlider>
