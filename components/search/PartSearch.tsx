@@ -2,27 +2,27 @@
 import type React from "react";
 import { useState } from "react";
 
-
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Bike, Bus, Car, Tractor, Truck } from "lucide-react";
 import { toast } from "sonner";
 
-
-
-import { singleArticleCompleteDetailsAction } from "@/actions/articles.actions";
+import {
+  dbProductPartSearchDetailsAction,
+  singleArticleCompleteDetailsAction,
+} from "@/actions/articles.actions";
 import ArticleCard from "@/components/card/ArticleCard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { ArticleDetailType, ArticleDetailsResponse } from "@/types/articles.type";
+import type {
+  ArticleDB,
+  ArticleDetailType,
+  ArticleDetailsApiDbResponse,
+} from "@/types/articles.type";
 import { VehiclesType } from "@/utils/constants/constants";
 
-
-
-
+import PartSearchResultCard from "./part-search-result-card";
 
 // optional: map values to icons
 const vehicleIcons: Record<string, React.ReactNode> = {
@@ -47,21 +47,35 @@ const PartSearch = () => {
     mutateAsync,
   } = useMutation({
     mutationKey: ["part-number", articleNo],
-    mutationFn: async () => {
+    mutationFn: async (): Promise<ArticleDetailsApiDbResponse> => {
       // ✅ check cache first
       const cached = queryClient.getQueryData(["part-number", articleNo]);
-      if (cached) {
+      if (
+        cached &&
+        typeof cached === "object" &&
+        cached !== null &&
+        "api" in cached &&
+        "db" in cached
+      ) {
         console.log("using cached data for", articleNo);
-        return cached; // skip API call
+        return cached as ArticleDetailsApiDbResponse; // skip API call
       }
-      const result = await singleArticleCompleteDetailsAction(articleNo, selectedId);
+      const apiResult = await singleArticleCompleteDetailsAction(
+        articleNo,
+        selectedId
+      );
+      const dbResult = await dbProductPartSearchDetailsAction(articleNo);
+      const result: ArticleDetailsApiDbResponse = {
+        api: apiResult,
+        db: dbResult,
+      };
       // ✅ store in cache
       queryClient.setQueryData(["part-number", articleNo], result);
       return result;
     },
-    onSuccess: (searchResult: ArticleDetailsResponse) => {
+    onSuccess: (searchResult: ArticleDetailsApiDbResponse) => {
       console.log("res", searchResult);
-      if (searchResult && searchResult.articles) {
+      if (searchResult && searchResult.api && searchResult.api.articles) {
         toast.success("Success", {
           description: "Success Search",
         });
@@ -79,6 +93,7 @@ const PartSearch = () => {
       });
     },
   });
+
   const handleArticleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("vvv", e.target.value);
     setArticleNo(e.target.value.toUpperCase());
@@ -123,11 +138,11 @@ const PartSearch = () => {
           className="mt-1 flex flex-wrap gap-4"
         >
           {VehiclesType.map((vehicle) => (
-            <div
-              key={vehicle.id}
-              className="flex items-center space-x-3"
-            >
-              <RadioGroupItem value={vehicle.value} id={`vehicle-${vehicle.id}`} />
+            <div key={vehicle.id} className="flex items-center space-x-3">
+              <RadioGroupItem
+                value={vehicle.value}
+                id={`vehicle-${vehicle.id}`}
+              />
               <Label
                 htmlFor={`vehicle-${vehicle.id}`}
                 className="flex cursor-pointer items-center space-x-2"
@@ -151,30 +166,50 @@ const PartSearch = () => {
       {/* Search Results */}
       {isPending ? (
         <div>Loading...</div>
-      ) : partNumberSearchResult ? (
-        <div className="flex size-full flex-col items-center gap-4">
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle>
-                Search Result:&nbsp;{partNumberSearchResult.articleNo}
-              </CardTitle>
-              <CardDescription>
-                Total Found&nbsp;{partNumberSearchResult.countArticles}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex size-full flex-col gap-4">
-              {partNumberSearchResult?.articles &&
-                partNumberSearchResult?.articles.length &&
-                partNumberSearchResult.articles.map(
-                  (article: ArticleDetailType) => (
-                    <ArticleCard article={article} key={article.articleId} />
+      ) : (
+        <>
+          {partNumberSearchResult && partNumberSearchResult?.db && (
+            <PartSearchResultCard
+              articleNo={partNumberSearchResult.db?.[0]?.cod || articleNo}
+              countArticles={partNumberSearchResult.db?.length || 0}
+              dataFound={partNumberSearchResult?.db?.length > 0}
+              type="db"
+            >
+              {partNumberSearchResult?.db?.length > 0 &&
+                partNumberSearchResult.db.map(
+                  (article: ArticleDB & { id: string }) => (
+                    <ArticleCard
+                      article={article}
+                      key={article.id + article.iann}
+                      type="db"
+                    />
                   )
                 )}
-            </CardContent>
-          </Card>
-        </div>
-      ) : (
-        <div>no data available</div>
+            </PartSearchResultCard>
+          )}
+          {partNumberSearchResult && partNumberSearchResult?.api && (
+            <PartSearchResultCard
+              articleNo={partNumberSearchResult.api.articleNo}
+              countArticles={partNumberSearchResult.api.countArticles}
+              dataFound={
+                partNumberSearchResult?.api?.articles &&
+                partNumberSearchResult?.api?.articles.length > 0
+              }
+            >
+              {partNumberSearchResult?.api?.articles &&
+                partNumberSearchResult?.api?.articles.length > 0 &&
+                partNumberSearchResult.api.articles.map(
+                  (article: ArticleDetailType) => (
+                    <ArticleCard
+                      article={article}
+                      key={article.articleId}
+                      type="api"
+                    />
+                  )
+                )}
+            </PartSearchResultCard>
+          )}
+        </>
       )}
     </section>
   );

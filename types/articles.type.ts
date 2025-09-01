@@ -22,9 +22,17 @@ export type ArticleType = {
 
 export type ArticleDetailsResponse = {
   articleNo: string;
-  countArticles: number;
-  articles: ArticleDetailType[];
-};
+    countArticles: number;
+    articles: ArticleDetailType[];
+  };
+export type ArticleDetailsApiDbResponse = {
+  db: (ArticleDB & { id: string })[] | null;
+  api: {
+    articleNo: string;
+    countArticles: number;
+    articles: ArticleDetailType[];
+  }
+  };
 
 export type ArticleDetailType = {
   articleId: number;
@@ -75,7 +83,7 @@ export type CompatibleCarType = {
 };
 
 // Article properties b2b
-export type Articles = {
+export type ArticleDB = {
   ste?: number | null;
   iann?: number | null;
   cod?: string | null;
