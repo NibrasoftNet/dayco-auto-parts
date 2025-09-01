@@ -21,6 +21,11 @@ export type ArticleType = {
 };
 
 export type ArticleDetailsResponse = {
+  articleNo: string;
+    countArticles: number;
+    articles: ArticleDetailType[];
+  };
+export type ArticleDetailsApiDbResponse = {
   db: (ArticleDB & { id: string })[] | null;
   api: {
     articleNo: string;

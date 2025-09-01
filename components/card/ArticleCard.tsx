@@ -102,10 +102,12 @@ const ArticleCard = ({
             />
           )
         )}
-        <Button size="sm" disabled={false}>
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
-        </Button>
+        {type === "db" && (
+          <Button size="sm" disabled={false}>
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Add to Cart
+          </Button>
+        )}
       </div>
     </li>
   );

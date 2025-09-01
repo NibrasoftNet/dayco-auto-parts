@@ -18,7 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type {
   ArticleDB,
   ArticleDetailType,
-  ArticleDetailsResponse,
+  ArticleDetailsApiDbResponse,
 } from "@/types/articles.type";
 import { VehiclesType } from "@/utils/constants/constants";
 
@@ -47,7 +47,7 @@ const PartSearch = () => {
     mutateAsync,
   } = useMutation({
     mutationKey: ["part-number", articleNo],
-    mutationFn: async (): Promise<ArticleDetailsResponse> => {
+    mutationFn: async (): Promise<ArticleDetailsApiDbResponse> => {
       // ✅ check cache first
       const cached = queryClient.getQueryData(["part-number", articleNo]);
       if (
@@ -58,14 +58,14 @@ const PartSearch = () => {
         "db" in cached
       ) {
         console.log("using cached data for", articleNo);
-        return cached as ArticleDetailsResponse; // skip API call
+        return cached as ArticleDetailsApiDbResponse; // skip API call
       }
       const apiResult = await singleArticleCompleteDetailsAction(
         articleNo,
         selectedId
       );
       const dbResult = await dbProductPartSearchDetailsAction(articleNo);
-      const result: ArticleDetailsResponse = {
+      const result: ArticleDetailsApiDbResponse = {
         api: apiResult,
         db: dbResult,
       };
@@ -73,7 +73,7 @@ const PartSearch = () => {
       queryClient.setQueryData(["part-number", articleNo], result);
       return result;
     },
-    onSuccess: (searchResult: ArticleDetailsResponse) => {
+    onSuccess: (searchResult: ArticleDetailsApiDbResponse) => {
       console.log("res", searchResult);
       if (searchResult && searchResult.api && searchResult.api.articles) {
         toast.success("Success", {

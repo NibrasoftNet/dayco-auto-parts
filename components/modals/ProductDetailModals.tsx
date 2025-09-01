@@ -150,7 +150,7 @@ const ProductDetailsModal = ({
                         getSupplierProperty(
                           String(article.cod),
                           "supLogoURL"
-                        ) || "/placeholder.png"
+                        ) || "/stdp_logo.jpg"
                       }
                       alt={"supplier-logo"}
                       width={100}
