@@ -9,13 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Articles } from "@/types/articles.type";
+import { ArticleDB } from "@/types/articles.type";
 
 import ProductDetailsModal from "../modals/ProductDetailModals";
 import { Badge } from "../ui/badge";
 
 interface ProductCardProps {
-  article: Articles & { id: string };
+  article: ArticleDB & { id: string };
   idx: number;
 }
 

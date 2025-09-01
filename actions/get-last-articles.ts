@@ -1,12 +1,12 @@
 // lib/articles.ts
 import { db, withSyntheticId } from "@/lib/db";
-import { Articles } from "@/types/articles.type";
+import { ArticleDB } from "@/types/articles.type";
 
 // Server-side only
 export async function getLastArticles(
   limit = 100
-): Promise<(Articles & { id: string })[]> {
-  const rawArticles = await db.$queryRaw<Articles[]>`
+): Promise<(ArticleDB & { id: string })[]> {
+  const rawArticles = await db.$queryRaw<ArticleDB[]>`
     SELECT TOP(${limit}) *
     FROM articles
     WHERE cod IS NOT NULL

@@ -1,23 +1,23 @@
 
  
 import { db, withSyntheticId } from "@/lib/db";
-import { Articles } from "@/types/articles.type";
+import { ArticleDB } from "@/types/articles.type";
 
 // Server-side only
 export async function getProducts(
   query: string,
   page = 1,
   pageSize = 20
-): Promise<(Articles & { id: string })[]> {
+): Promise<(ArticleDB & { id: string })[]> {
   const offset = (page - 1) * pageSize;
 
-  const rawProducts = await db.$queryRaw<Articles[]>`
+  const rawProducts = await db.$queryRaw<ArticleDB[]>`
     SELECT *
     FROM articles
     WHERE cod LIKE ${"%" + query + "%"}
        OR reffrn LIKE ${"%" + query + "%"}
        OR codebar LIKE ${"%" + query + "%"}
-    ORDER BY iann ASC
+    ORDER BY iann DESC
     OFFSET ${offset} ROWS
     FETCH NEXT ${pageSize} ROWS ONLY
   `;
@@ -29,14 +29,14 @@ export async function getProducts(
 // Server-side only
 export async function getProductDetails(
   partRef: string,
-  partYear: string
-): Promise<(Articles & { id: string }) | null> {
+  partYear?: string
+): Promise<(ArticleDB & { id: string }) | null> {
   try {
-    const result = await db.$queryRaw<Articles[]>`
+    const result = await db.$queryRaw<ArticleDB[]>`
       SELECT *
       FROM articles
       WHERE cod = ${partRef}
-        AND iann = ${partYear}
+        AND iann = ${partYear ? partYear : ""}
     `;
 
     if (!result || result.length === 0) {

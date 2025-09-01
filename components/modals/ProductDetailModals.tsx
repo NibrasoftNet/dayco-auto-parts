@@ -17,12 +17,12 @@ import {
   ModalTrigger,
 } from "@/components/ui/animated-modal";
 import { getSupplierProperty } from "@/lib/methods";
-import type { Articles } from "@/types/articles.type";
+import type { ArticleDB } from "@/types/articles.type";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-type FetchedArticle = (Articles & { id: string }) | null;
+type FetchedArticle = (ArticleDB & { id: string }) | null;
 
 interface ProductDetailsModalProps {
   partRef: string;

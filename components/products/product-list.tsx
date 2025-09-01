@@ -8,13 +8,13 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { serialize } from "@/lib/serializers";
-import { Articles } from "@/types/articles.type";
+import { ArticleDB } from "@/types/articles.type";
 
 import ProductCard from "./product-card";
 import ProductCardSkeleton from "./product-card-skeleton";
 
 interface ProductListProps {
-  initialArticles: (Articles & { id: string })[];
+  initialArticles: (ArticleDB & { id: string })[];
 }
 
 export default function ProductList({ initialArticles }: ProductListProps) {
@@ -47,7 +47,7 @@ export default function ProductList({ initialArticles }: ProductListProps) {
         );
         if (!res.ok) throw new Error("Failed to fetch products");
 
-        const data = (await res.json()) as (Articles & { id: string })[];
+        const data = (await res.json()) as (ArticleDB & { id: string })[];
         setArticles((prev) => (replace ? data : [...prev, ...data]));
         setHasMore(data.length === pageSize);
         return data;

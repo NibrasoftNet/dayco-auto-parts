@@ -1,9 +1,9 @@
 import { getArticles } from "@/actions/get-articles";
 import ProductList from "@/components/products/product-list";
-import { Articles } from "@/types/articles.type";
+import { ArticleDB } from "@/types/articles.type";
 
 export default async function ArticlesPage() {
-  const initialArticles: (Articles & { id: string })[] = await getArticles(
+  const initialArticles: (ArticleDB & { id: string })[] = await getArticles(
     1,
     20
   );
