@@ -17,6 +17,12 @@ export const MANUFACTURERS: Record<
       manufacturerId: 5400,
       brand: "22KYMCO",
     },
+    8232: {
+      websiteURL: "https://www.kymco.com",
+      imageURL: "/manufacturers/212.png",
+      manufacturerId: 8232,
+      brand: "212",
+    },
     3854: {
       websiteURL: "https://www.abarth.com",
       imageURL: "/manufacturers/ABARTH.png",
@@ -569,6 +575,12 @@ export const MANUFACTURERS: Record<
       manufacturerId: 2849,
       brand: "BAJAJ TEMPO",
     },
+    6861: {
+      websiteURL: "https://www.dayco.com",
+      imageURL: "/manufacturers/BAK.png",
+      manufacturerId: 6861,
+      brand: "BAK AUTO",
+    },
     3764: {
       websiteURL: "https://www.dayco.com",
       imageURL: "/manufacturers/BAOJUN.png",
@@ -985,7 +997,7 @@ export const MANUFACTURERS: Record<
     },
     3194: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CARLARKY.png",
       manufacturerId: 3194,
       brand: "CARLARKY",
     },
@@ -997,7 +1009,7 @@ export const MANUFACTURERS: Record<
     },
     2915: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CASALINI.png",
       manufacturerId: 2915,
       brand: "CASALINI",
     },
@@ -1045,25 +1057,25 @@ export const MANUFACTURERS: Record<
     },
     3678: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CHAMONIX.png",
       manufacturerId: 3678,
       brand: "CHAMONIX",
     },
     4609: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CHANA.png",
       manufacturerId: 4609,
       brand: "CHANA",
     },
     2852: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CHANGAN.png",
       manufacturerId: 2852,
       brand: "CHANGAN",
     },
     2889: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CHANGFENG.png",
       manufacturerId: 2889,
       brand: "CHANGFENG",
     },
@@ -1075,7 +1087,7 @@ export const MANUFACTURERS: Record<
     },
     2916: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/CHATENET.png",
       manufacturerId: 2916,
       brand: "CHATENET",
     },
@@ -1573,7 +1585,7 @@ export const MANUFACTURERS: Record<
     },
     142: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/EBRO.png",
       manufacturerId: 142,
       brand: "EBRO",
     },
@@ -1591,7 +1603,7 @@ export const MANUFACTURERS: Record<
     },
     3618: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/EFFEDI.png",
       manufacturerId: 3618,
       brand: "EFFEDI",
     },
@@ -1615,7 +1627,7 @@ export const MANUFACTURERS: Record<
     },
     3332: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/EMGRAND.png",
       manufacturerId: 3332,
       brand: "EMGRAND",
     },
@@ -1627,7 +1639,7 @@ export const MANUFACTURERS: Record<
     },
     3704: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/ENGLON.png",
       manufacturerId: 3704,
       brand: "ENGLON",
     },
@@ -2215,7 +2227,7 @@ export const MANUFACTURERS: Record<
     },
     2903: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/GREAT-WALL.png",
       manufacturerId: 2903,
       brand: "GREAT WALL",
     },
@@ -2959,7 +2971,7 @@ export const MANUFACTURERS: Record<
     },
     2888: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/JINBEI.png",
       manufacturerId: 2888,
       brand: "JINBEI",
     },
@@ -3823,13 +3835,13 @@ export const MANUFACTURERS: Record<
     },
     1523: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/MINI.png",
       manufacturerId: 1523,
       brand: "MINI",
     },
     6028: {
       websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
+      imageURL: "/manufacturers/MINI.png",
       manufacturerId: 6028,
       brand: "MINI (GB)",
     },
@@ -6738,12 +6750,6 @@ export const MANUFACTURERS: Record<
       imageURL: "/manufacturers/MANUFACTURER.png",
       manufacturerId: 3823,
       brand: "CHALLENGER",
-    },
-    2852: {
-      websiteURL: "https://www.dayco.com",
-      imageURL: "/manufacturers/MANUFACTURER.png",
-      manufacturerId: 2852,
-      brand: "CHANGAN",
     },
     3989: {
       websiteURL: "https://www.dayco.com",
