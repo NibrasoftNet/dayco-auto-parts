@@ -2,7 +2,13 @@
 
 import { memo } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Articles } from "@/types/articles.type";
 
 import ProductDetailsModal from "../modals/ProductDetailModals";
@@ -34,10 +40,12 @@ const ProductCard = memo(({ article }: ProductCardProps) => {
       <CardContent className="space-y-2">
         <p className="text-lg font-medium">Ref#: {partRef || "—"}</p>
         <p>Price: {article.pvttc ?? 0} TND</p>
-
-        {/* The modal renders its own trigger button and handles fetching */}
-        <ProductDetailsModal partRef={partRef} partYear={partYear} />
       </CardContent>
+      <CardFooter className="flex w-full items-end justify-end">
+        {/* The modal renders its own trigger button and handles fetching */}
+
+        <ProductDetailsModal partRef={partRef} partYear={partYear} />
+      </CardFooter>
     </Card>
   );
 });
